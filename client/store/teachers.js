@@ -1,25 +1,32 @@
-import { createStore } from 'redux'
-import { thunkMiddleware } from 'react-redux'
+// import { createStore } from 'redux'
+// import { thunkMiddleware } from 'react-redux'
 
 // INITAL STATE
-export const teachersState = {
-  teachers: [],
+export const initialState = {
+  directory: [],
   input: ''
 }
 
 // ACTION TYPES
-
+const GET_TEACHERS = 'GET_TEACHERS'
 
 // ACTION CREATORS
-
+export const getTeachers = (teachers) => {
+  type: GET_TEACHERS,
+  teachers
+}
 
 // STUDENT REDUCER
-const teachersReducer = (state = teachersState, action) => {
+const teachers = (state = initialState, action) => {
   switch(action.type) {
-  	
+  	case GET_TEACHERS:
+  	  return ({
+  	  	...state,
+  	  	directory: action.teachers
+  	  })
   	default:
   	return state
   }
 }
 
-export default teachersReducer;
+export default teachers;

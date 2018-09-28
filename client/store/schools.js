@@ -1,9 +1,9 @@
-import { createStore } from 'redux'
-import { thunkMiddleware } from 'react-redux'
+// import { createStore } from 'redux'
+// import { thunkMiddleware } from 'react-redux'
 
 // INITAL STATE
-export const schoolsState = {
-  schools: [],
+export const initialState = {
+  directory: [],
   input: ''
 }
 
@@ -14,7 +14,7 @@ export const schoolsState = {
 
 
 // STUDENT REDUCER
-const schoolsReducer = (state = schoolsState, action) => {
+const schools = (state = initialState, action) => {
   switch(action.type) {
   	
   	default:
@@ -22,4 +22,4 @@ const schoolsReducer = (state = schoolsState, action) => {
   }
 }
 
-export default schoolsReducer
+export default schools;

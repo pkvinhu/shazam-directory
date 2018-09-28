@@ -1,4 +1,4 @@
-
+const Sequelize = require('sequelize');
 const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const expect = chai.expect;
@@ -13,10 +13,6 @@ describe('Models', () => {
   	beforeEach(() => {
   	  return db.syncAndSeed();
   	  });
-
-    afterEach(() => {
-      return db.syncAndSeed();
-    })
 
   	it('name is required', async () => {
   	  await expect(Student.create({firstName: 'Moo', lastName: '', gpa: 3.0})).to.be.rejected;

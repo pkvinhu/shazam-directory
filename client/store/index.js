@@ -1,17 +1,16 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
-import { thunkMiddleware } from 'react-redux'
-import { loggingMiddleware } from 'redux-logger'
-import studentsReducer, { studentsState } from './students'
-import teachersReducer, { teachersState } from './teachers'
-import schoolsReducer, { schoolsState } from './schools'
-
+import thunkMiddleware from 'redux-thunk'
+import loggingMiddleware from 'redux-logger'
+import students from './students'
+import teachers from './teachers'
+import schools from './schools'
 
 
 const reducer = combineReducers({
-  studentsReducer,
-  teachersReducer,
-  schoolsReducer
+  students,
+  teachers,
+  schools
 });
 
-const store = createStore(reducer)
+const store = createStore(reducer, applyMiddleware(loggingMiddleware, thunkMiddleware))
 export default store;

@@ -148,7 +148,7 @@ describe('Routes', () => {
   	 	it('gets all schools', async () => {
   	 	  const [ chuchie, something, school1, school2, school3 ] = await Promise.all([
   	 	  	Student.create({firstName: 'Chuchie', lastName: 'Serrano', gpa: '2.0'}),
-  	 	  	Teacher.create({ name: 'Something', subjects: ['Math', 'History'] }),
+  	 	  	Teacher.create({ name: 'Something' }),
   	 	  	School.create({ name: 'Northwestern' }),
   	 	  	School.create({ name: 'Northeastern' }),
   	 	  	School.create({ name: 'Southwestern' })
