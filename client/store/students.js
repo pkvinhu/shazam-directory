@@ -2,14 +2,11 @@ import axios from 'axios'
 
 // INITAL STATE
 export const initialState = {
-  directory: [],
-  input: '',
-  searching: false
+  directory: []
 }
 
 // ACTION TYPES
 const GET_STUDENTS = 'GET_STUDENTS'
-const CURRENT_SEARCH = 'CURRENTLY_SEARCH'
 
 
 // ACTION CREATORS
@@ -18,14 +15,16 @@ export const getStudents = (students) => ({
   students
 })
 
-export const currentSearchStudents = ({
-  type: CURRENT_SEARCH,
-})
-
 // THUNK CREATORS
 export const _fetchStudents = () => async dispatch => {
   const response = await axios.get('/api/shazam/students')
   const students = response.data
+  dispatch(getStudents(students))
+}
+
+export const _searchStudents = search => async dispatch => {
+  const response = await axios.get(`/api/shazam/${search}/search`)
+  const students = response.data;
   dispatch(getStudents(students))
 }
 
@@ -37,11 +36,7 @@ const students = (state = initialState, action) => {
   	  	...state,
   	  	directory: action.students
   	  })
-  	case CURRENT_SEARCH:
-  	  return ({
-  	  	...state,
-  	  	searching: true
-  	  })  	
+    
   	default:
   	return state
   }
