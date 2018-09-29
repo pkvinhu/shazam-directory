@@ -5,6 +5,7 @@ import Welcome from './Welcome'
 import StudentsDirectory from './StudentsDirectory'
 import TeachersDirectory from './TeachersDirectory'
 import SchoolsDirectory from './SchoolsDirectory'
+import SearchForm from './SearchForm'
 
 export default class HomePage extends Component {
   
@@ -20,9 +21,10 @@ export default class HomePage extends Component {
   	    <hr />
   	    <div>
   	      <Route path='/welcome' component={Welcome} />
+          <Route exact path='/:filter/search' component={SearchForm} />         
   	      <Route path='/students' component={StudentsDirectory} />
-  	      <Route path='/api/shazam/teachers' component={TeachersDirectory}/>
-  	      <Route path='/api/shazam/schools' component={SchoolsDirectory}/>
+  	      <Route path='/teachers' component={TeachersDirectory}/>
+  	      <Route path='/schools' component={SchoolsDirectory}/>
   	      <Route path='/students/:id' />
   	      <Route path='/teachers/:id' />
   	      <Route path='/schools/:id' />

@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize')
 const express = require('express');
 const router = express.Router();
 const { School, Student, Teacher } = require('../db').models;
@@ -67,6 +68,45 @@ router.get('/schools/:id', (req, res, next) => {
   .catch(next)
 })
 
+// GET BY :NAME
+router.get('/students/search', (req, res, next) => {
+  const Op = Sequelize.Op;
+  Student.findAll({
+    where: {
+      firstName: {
+        [Op.like] : '%' + req.body.name + '%'
+      },
+      lastName: {
+        [Op.like] : '%' + req.body.name + '%'
+      }      
+    }
+  })
+  .then(students => res.send(students))
+})
+
+router.get('/teachers/search', (req, res, next) => {
+  const Op = Sequelize.Op;
+  Teacher.findAll({
+    where: {
+      name: {
+        [Op.like] : '%' + req.body.name + '%'
+      }
+    }
+  })
+  .then(teachers => res.send(teachers))
+})
+
+router.get('/schools/search', (req, res, next) => {
+  const Op = Sequelize.Op;
+  School.findAll({
+    where: {
+      name: {
+        [Op.like] : '%' + req.body.name + '%'
+      }
+    }
+  })
+  .then(schools => res.send(schools))
+})
 
 //DELETE
 router.delete('/students/:id', (req, res, next) => {

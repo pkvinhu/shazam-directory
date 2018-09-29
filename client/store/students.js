@@ -3,16 +3,23 @@ import axios from 'axios'
 // INITAL STATE
 export const initialState = {
   directory: [],
-  input: ''
+  input: '',
+  searching: false
 }
 
 // ACTION TYPES
 const GET_STUDENTS = 'GET_STUDENTS'
+const CURRENT_SEARCH = 'CURRENTLY_SEARCH'
+
 
 // ACTION CREATORS
 export const getStudents = (students) => ({
   type: GET_STUDENTS,
   students
+})
+
+export const currentSearchStudents = ({
+  type: CURRENT_SEARCH,
 })
 
 // THUNK CREATORS
@@ -30,6 +37,11 @@ const students = (state = initialState, action) => {
   	  	...state,
   	  	directory: action.students
   	  })
+  	case CURRENT_SEARCH:
+  	  return ({
+  	  	...state,
+  	  	searching: true
+  	  })  	
   	default:
   	return state
   }

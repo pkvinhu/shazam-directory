@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { _fetchTeachers } from '../store/teachers'
 
 class TeachersDirectory extends Component {
   
+  componentDidMount() {
+    this.props._fetchTeachers()
+  }
+
   render() {
   	const { teachers } = this.props;
   	const categories = [ 'Name', 'Subjects' ];
@@ -17,7 +22,7 @@ class TeachersDirectory extends Component {
   	      return(
   	      	<tr>
   	      	  <th>{teacher.name}</th>
-  	      	  <th>{teacher.subjects || 'None'}</th>
+  	      	  <th>{teacher.subjects.join(', ') || 'None'}</th>
   	      	</tr>
   	      )
   	    })}
@@ -36,4 +41,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(TeachersDirectory)
+const mapDispatchToProps = dispatch => ({
+  _fetchTeachers: () => dispatch(_fetchTeachers())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeachersDirectory)
