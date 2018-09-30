@@ -22,12 +22,6 @@ export const _fetchStudents = () => async dispatch => {
   dispatch(getStudents(students))
 }
 
-export const _searchStudents = (search, input) => async dispatch => {
-  const response = await axios.post(`/api/shazam/search/${search}`, input)
-  const students = response.data;
-  dispatch(getStudents(students))
-}
-
 // STUDENT REDUCER
 const students = (state = initialState, action) => {
   switch(action.type) {

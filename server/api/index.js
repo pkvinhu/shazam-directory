@@ -86,7 +86,6 @@ router.post('/search/:filter', (req, res, next) => {
     }
   })
   .then(students => {
-    console.log(students)
     res.send(students)
   })
   .catch(next)
@@ -101,7 +100,6 @@ router.post('/search/:filter', (req, res, next) => {
       }
     })
     .then(teachers => {
-      console.log(teachers)
       res.send(teachers)
     })
     .catch(next)

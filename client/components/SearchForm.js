@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { writeSearch, currentSearch } from '../store'
-import { _searchStudents } from '../store/students'
-import { _searchTeachers } from '../store/teachers'
-import { _searchSchools } from '../store/schools'
+import { writeSearch, currentSearch, _searchStudents, _searchTeachers, _searchSchools } from '../store/search'
 import SearchInformation from './SearchInformation'
+import HomePage from './HomePage'
+import NavBar from './NavBar'
 
 class SearchForm extends Component {
   constructor() {
   	super()
-  	this.state = {
-  	  queryData: []
-  	}
+  	this.state = { submitted: false }
   	this.handleChange = this.handleChange.bind(this);
   	this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -23,44 +20,43 @@ class SearchForm extends Component {
 
   handleSubmit(e) {
   	e.preventDefault()
-    const { search, input, _searchStudents, _searchTeachers, _searchSchools, currentSearch, writeSearch, students, teachers, schools } = this.props;
+    const { search, input, _searchStudents, _searchTeachers, _searchSchools } = this.props;
+    
+    this.setState({ submitted: true })
+    
     if(search === 'students') { 
       _searchStudents(search, {name: input})
-      .then(() => this.setState({ queryData: students }))
     }
 
     else if (search === 'teachers') { 
       _searchTeachers(search, {name: input})
-      .then(() => this.setState({ queryData: teachers }))
     }
 
     else if (search === 'schools') { 
       _searchSchools(search, {name: input})
-      .then(() => this.setState({ queryData: schools }))
     }
+  }
 
-    currentSearch('');
-	writeSearch('');
+  componentWillUnmount(){
+  	this.setState({ submitted: false })
   }
   
   render() {
     const { input, search } = this.props
-    const { handleChange, handleSubmit } = this;
-    const clicked = false;
+    const { handleChange, handleSubmit, renderSearchInfo } = this;
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center'}}>
-  	  {clicked === false ?
-  	  	
+  	  {this.state.submitted === false ?
   	    <form onSubmit={handleSubmit}>
   	      <input placeholder={`Search ${search}...`} 
   	             name={input}
   	             type='text' 
   	             onChange={handleChange} 
   	             value={input}></input>
-  	      <button onClick={!clicked}>Search</button>
+  	      <button>Search</button>
   	    </form> :
-  	    <SearchInformation info={this.state.queryData}/>
-  	  }
+  	    <SearchInformation />
+  	}
   	  </div>
   	)
   }
@@ -70,10 +66,7 @@ const mapStateToProps = state => {
   const { search, input } = state.search
   return { 
   	search: search,
-  	input: input,
-  	students: state.students.directory,
-  	teachers: state.teachers.directory,
-  	schools: state.schools.directory
+  	input: input
   }
 }
 
@@ -81,8 +74,7 @@ const mapDispatchToProps = dispatch => ({
   writeSearch: (content) => dispatch(writeSearch(content)),
   _searchStudents: (search, input) => dispatch(_searchStudents(search, input)),
   _searchTeachers: (search, input) => dispatch(_searchTeachers(search, input)),
-  _searchSchools: (search, input) => dispatch(_searchSchools(search, input)),
-  currentSearch: (s) => dispatch(currentSearch(s))
+  _searchSchools: (search, input) => dispatch(_searchSchools(search, input))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchForm)

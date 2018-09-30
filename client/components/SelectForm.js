@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { currentSearch } from '../store'
+import { currentSearch } from '../store/search'
 
 class SelectForm extends Component {
 	constructor() {
