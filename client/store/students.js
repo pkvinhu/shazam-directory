@@ -22,8 +22,8 @@ export const _fetchStudents = () => async dispatch => {
   dispatch(getStudents(students))
 }
 
-export const _searchStudents = search => async dispatch => {
-  const response = await axios.get(`/api/shazam/${search}/search`)
+export const _searchStudents = (search, input) => async dispatch => {
+  const response = await axios.post(`/api/shazam/search/${search}`, input)
   const students = response.data;
   dispatch(getStudents(students))
 }
@@ -32,6 +32,7 @@ export const _searchStudents = search => async dispatch => {
 const students = (state = initialState, action) => {
   switch(action.type) {
   	case GET_STUDENTS:
+  	  console.log(action.students)
   	  return ({
   	  	...state,
   	  	directory: action.students

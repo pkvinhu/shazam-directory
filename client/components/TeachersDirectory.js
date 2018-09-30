@@ -12,7 +12,7 @@ class TeachersDirectory extends Component {
   	const { teachers } = this.props;
   	const categories = [ 'Name', 'Subjects' ];
   	return (
-  	  <div>
+  	  <div style={{ display: 'flex', justifyContent: 'center' }}>
   	    <table>
   	    <tbody>
   	    <tr>

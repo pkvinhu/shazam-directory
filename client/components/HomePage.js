@@ -21,7 +21,7 @@ export default class HomePage extends Component {
   	    <hr />
   	    <div>
   	      <Route path='/welcome' component={Welcome} />
-          <Route exact path='/:filter/search' component={SearchForm} />         
+          <Route exact path='/search' component={SearchForm} />         
   	      <Route exact path='/students' component={StudentsDirectory} />
   	      <Route exact path='/teachers' component={TeachersDirectory}/>
   	      <Route exact path='/schools' component={SchoolsDirectory}/>

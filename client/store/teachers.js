@@ -2,8 +2,7 @@ import axios from 'axios'
 
 // INITAL STATE
 export const initialState = {
-  directory: [],
-  input: ''
+  directory: []
 }
 
 // ACTION TYPES
@@ -24,8 +23,8 @@ export const _fetchTeachers = () => async dispatch => {
   dispatch(getTeachers(teachers))
 }
 
-export const _searchTeachers = search => async dispatch => {
-  const response = await axios.get(`/api/shazam/${search}/search`)
+export const _searchTeachers = (search, input) => async dispatch => {
+  const response = await axios.post(`/api/shazam/search/${search}`, input)
   const students = response.data;
   dispatch(getTeachers(teachers))
 }

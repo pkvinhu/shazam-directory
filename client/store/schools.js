@@ -23,8 +23,8 @@ export const _fetchSchools = () => async dispatch => {
   dispatch(getSchools(schools))
 }
 
-export const _searchSchools = search => async dispatch => {
-  const response = await axios.get(`/api/shazam/${search}/search`)
+export const _searchSchools = (search, input) => async dispatch => {
+  const response = await axios.post(`/api/shazam/search/${search}`, input)
   const schools = response.data;
   dispatch(getSchools(schools))
 }
