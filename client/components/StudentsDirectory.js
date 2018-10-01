@@ -12,7 +12,7 @@ class StudentsDirectory extends Component {
   render() {
   	const { students } = this.props;
 
-  	const categories = [ 'First Name', 'Last Name', 'GPA', 'Exracurriculars', 'Profile Picture', ''];
+  	const categories = [ 'First Name', 'GPA', 'Exracurriculars', 'Profile Picture', ''];
 
   	const borderStyle = { 
       border: '1px solid black', 
@@ -33,8 +33,7 @@ class StudentsDirectory extends Component {
   	    {students.map((student, idx) => {
   	      return(
   	      	<tr style={borderStyle}>
-  	      	  <th style={borderStyle}>{student.firstName}</th>
-  	      	  <th style={borderStyle}>{student.lastName}</th>
+  	      	  <th style={borderStyle}>{student.name}</th>
   	      	  <th style={borderStyle}>{student.gpa}</th>
   	      	  <th style={borderStyle}>{student.extracurriculars || 'None'}</th>
   	      	  <th style={borderStyle}>{student.img}</th>

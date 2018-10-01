@@ -3,14 +3,7 @@ const conn = new Sequelize(process.env.DATABASE_URL, { logging: false })
 const faker = require('faker');
 
 const Student = conn.define('student', {
-  firstName: {
-  	type: Sequelize.STRING,
-  	allowNull: false,
-  	validate: {
-  	  notEmpty: true
-  	}
-  },
-  lastName: {
+  name: {
   	type: Sequelize.STRING,
   	allowNull: false,
   	validate: {
@@ -111,9 +104,9 @@ const syncAndSeed = () => {
   return conn.sync({ force: true })
   .then(() => {
     return Promise.all([
-      Student.create({ firstName: 'Harry', lastName: 'Problem', gpa: 3.85}),
-      Student.create({ firstName: 'Tarry', lastName: 'Choo', gpa: 3.85}),
-      Student.create({ firstName: 'Nana', lastName: 'Baba', gpa: 3.85}),
+      Student.create({ name: 'Harry Problem', gpa: 3.85}),
+      Student.create({ name: 'Tarry Choo', gpa: 3.85}),
+      Student.create({ name: 'Nana Baba', gpa: 3.85}),
       Teacher.create({ name: 'Harry Thomas', gender: 'M', subjects: ['History', 'Anthropology']}),
       Teacher.create({ name: 'Barry Tomas', gender: 'M', subjects: ['Math', 'Accounting']}),
       Teacher.create({ name: 'Larry Roma', gender: 'M', subjects: ['Theology', 'Sociology']}),

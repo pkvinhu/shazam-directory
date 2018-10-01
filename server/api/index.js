@@ -75,15 +75,10 @@ router.post('/search/:filter', (req, res, next) => {
   if(req.params.filter === 'students') {
   Student.findAll({
     where: {
-      [Op.or]: {
-        firstName: {
-          [Op.like] : '%' + req.body.name + '%'
-        },
-        lastName: {
-          [Op.like] : '%' + req.body.name + '%'
-        } 
-      }     
-    }
+      name: {
+        [Op.like] : '%' + req.body.name + '%'
+      }
+    }     
   })
   .then(students => {
     res.send(students)
@@ -118,6 +113,24 @@ router.post('/search/:filter', (req, res, next) => {
   }
 })
 
+//CREATE
+router.post('/students/create', (req, res, next) => {
+  Student.create(req.body)
+  .then(student => res.send(student))
+  .catch(next)
+})
+
+router.post('/teachers/create', (req, res, next) => {
+  Teacher.create(req.body)
+  .then(teacher => res.send(teacher))
+  .catch(next)
+})
+
+router.post('/schools/create', (req, res, next) => {
+  School.create(req.body)
+  .then(school => res.send(school))
+  .catch(next)
+})
 
 //DELETE
 router.delete('/students/:id', (req, res, next) => {

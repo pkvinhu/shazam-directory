@@ -8,14 +8,14 @@ import TeachersDirectory from './TeachersDirectory'
 import SchoolsDirectory from './SchoolsDirectory'
 import SearchForm from './SearchForm'
 import SearchInformation from './SearchInformation'
+import CreateForm from './CreateForm'
 
 
-class HomePage extends Component {
+export default class HomePage extends Component {
   
 
   render() {
-    const { submitted, search } = this.props;
-    console.log(submitted)
+    // const { submitted, search } = this.props;
   	return (
   	  <div>
   	   <header style={{ backgroundColor: '#ff9933', display: 'flex', justifyContent: 'center' }}>
@@ -27,7 +27,8 @@ class HomePage extends Component {
   	    <div>
   	      <Route path='/welcome' component={Welcome} />
           <Route exact path='/search' component={SearchForm} />
-          <Route path='/search/:filter' component={SearchInformation} />         
+          <Route path='/search/:filter' component={SearchInformation} />
+          <Route path='/create' component={CreateForm} />         
   	      <Route exact path='/students' component={StudentsDirectory} />
   	      <Route exact path='/teachers' component={TeachersDirectory}/>
   	      <Route exact path='/schools' component={SchoolsDirectory}/>
@@ -39,13 +40,3 @@ class HomePage extends Component {
   	)
   }
 }
-
-const mapStateToProps = state => {
-  const { submitted, search } = state.search 
-  return { 
-    submitted: submitted,
-    search: search
-  }
-}
-
-export default connect(mapStateToProps)(HomePage)

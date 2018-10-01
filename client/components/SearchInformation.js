@@ -1,29 +1,30 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { flipSubmit } from '../store/search'
+import { flipSubmit, clear } from '../store/search'
 
 class SearchInformation extends Component {
-  constructor() {
-  	super()
-  }
-
-  componentWillUnmount(){
-  	this.props.flipSubmit();
+  componentDidUnmount(){
+  	this.props.clear();
   }
 
   render() {
   	const { data } = this.props;
-  	console.log('This', data)
+
+  	const borderStyle = { 
+      border: '1px solid black', 
+      padding: '25px' 
+    }
+
   	if(data.length > 0) {
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center' }}>
-  	    <table>
-  	      {data[0].firstName &&
-  	       <StudentBody data={data}/>}
+  	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '50%' }}>
+  	      {!data[0].admin &&
+  	       <StudentBody data={data} borderStyle={borderStyle}/>}
   	      {data[0].address &&
-  	      	<SchoolBody data={data}/>}
+  	      	<SchoolBody data={data} borderStyle={borderStyle}/>}
   	      {data[0].admin &&
-  	      	<TeacherBody data={data}/>}
+  	      	<TeacherBody data={data} borderStyle={borderStyle}/>}
   	    </table>
   	  </div>
   	)
@@ -40,19 +41,18 @@ class SearchInformation extends Component {
 class StudentBody extends Component {
 
   render() {
-  	const { data } = this.props;
+  	const { data, borderStyle } = this.props;
   	console.log('This is data', data)
-  	const categories = [ 'First Name', 'Last Name', 'GPA', 'Extracurriculars' ]
+  	const categories = [ 'First Name', 'GPA', 'Extracurriculars' ]
   	return (
   	  <tbody>
   	    {categories.map(c => (<th>{c}</th>))}
   	    {data.map((each, idx) => {
   	    return(
-  	      	<tr>
-  	      	  <th>{each.firstName}</th>
-  	      	  <th>{each.lastName}</th>
-  	      	  <th>{each.gpa}</th>
-  	      	  <th>{each.extracurricular || 'None'}</th>
+  	      	<tr style={borderStyle}>
+  	      	  <th style={borderStyle}>{each.name}</th>
+  	      	  <th style={borderStyle}>{each.gpa}</th>
+  	      	  <th style={borderStyle}>{each.extracurricular || 'None'}</th>
   	      	</tr>
   	      )
   	    })}
@@ -64,16 +64,16 @@ class StudentBody extends Component {
 class TeacherBody extends Component {
 
   render() {
-  	const { data } = this.props;
+  	const { data, borderStyle } = this.props;
   	const categories = [ 'Name', 'Subjects']
   	return (
   	  <tbody>
   	    {categories.map(c => (<th>{c}</th>))}
   	    {data.map((each, idx) => {
   	    return(
-  	      	<tr>
-  	      	  <th>{each.name}</th>
-  	      	  <th>{each.subjects.join(', ') || 'None'}</th>
+  	      	<tr style={borderStyle}>
+  	      	  <th style={borderStyle}>{each.name}</th>
+  	      	  <th style={borderStyle}>{each.subjects.join(', ') || 'None'}</th>
   	      	</tr>
   	      )
   	    })}
@@ -85,16 +85,16 @@ class TeacherBody extends Component {
 class SchoolBody extends Component {
 
   render() {
-  	const { data } = this.props;
+  	const { data, borderStyle } = this.props;
   	const categories = [ 'Name', 'Address']
   	return (
   	  <tbody>
   	    {categories.map(c => (<th>{c}</th>))}
   	    {data.map((each, idx) => {
   	    return(
-  	      	<tr>
-  	      	  <th>{each.name}</th>
-  	      	  <th>{each.address}</th>
+  	      	<tr style={borderStyle}>
+  	      	  <th style={borderStyle}>{each.name}</th>
+  	      	  <th style={borderStyle}>{each.address}</th>
   	      	</tr>
   	      )
   	    })}
@@ -109,7 +109,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  flipSubmit: () => dispatch(flipSubmit())
+  flipSubmit: () => dispatch(flipSubmit()),
+  clear: () => dispatch(clear())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchInformation)

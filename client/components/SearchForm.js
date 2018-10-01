@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { writeSearch, currentSearch, _searchData } from '../store/search'
+import { Redirect } from 'react-router-dom'
+import { writeSearch, currentSearch, _searchData, flipSubmit } from '../store/search'
 import SearchInformation from './SearchInformation'
 import HomePage from './HomePage'
 import NavBar from './NavBar'
@@ -19,15 +20,18 @@ class SearchForm extends Component {
 
   handleSubmit(e) {
   	e.preventDefault()
-    const { search, input, _searchData } = this.props;
-    
+    const { search, input, _searchData, flipSubmit } = this.props;
     _searchData(search, {name: input})
-	  
+	flipSubmit()
   }
   
   render() {
-    const { input, search } = this.props
-    const { handleChange, handleSubmit, renderSearchInfo } = this;
+    const { input, search, submitted } = this.props
+    const { handleChange, handleSubmit } = this;
+  	
+  	if (!submitted) {
+  	  return <Redirect to={`/search/${search}`} />
+  	} else {
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center'}}>
 
@@ -42,21 +46,23 @@ class SearchForm extends Component {
   	  </div>
   	)
   }
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { search, input } = state.search
-  const { history } = ownProps
+  const { search, input, submitted } = state.search
   console.log(history)
   return { 
   	search: search,
-  	input: input
+  	input: input,
+  	submitted: submitted
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   writeSearch: (content) => dispatch(writeSearch(content)),
-  _searchData: (search, input) => dispatch(_searchData(search, input))
+  _searchData: (search, input) => dispatch(_searchData(search, input)),
+  flipSubmit: () => dispatch(flipSubmit())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchForm)

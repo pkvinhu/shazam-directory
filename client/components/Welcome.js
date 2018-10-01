@@ -9,6 +9,7 @@ export default class Welcome extends Component {
   	  navigation: ''
   	}
   	this.handleClick = this.handleClick.bind(this)
+    this.resetNav = this.resetNav.bind(this)
   }
 
   handleClick(e) {
@@ -16,9 +17,13 @@ export default class Welcome extends Component {
   	this.setState({ [e.target.name]: e.target.innerHTML })
   }
 
+  resetNav(){
+    this.setState({ navigation: '' })
+  }
+
   render() {
-  	const { handleClick } = this;
-  	const options = [ 'search', 'create', 'update' ];
+  	const { handleClick, resetNav } = this;
+  	const options = [ 'search', 'create' ];
     const { navigation } = this.state;
     console.log(navigation)
   	return(
@@ -39,10 +44,8 @@ export default class Welcome extends Component {
                     onClick={handleClick}>{option}</button>
   	      )
   	    })}
-        {navigation === 'search' &&
-          <SelectForm /> }
-        {navigation === 'create' &&
-         <CreateForm /> }
+        {navigation !== '' &&
+          <SelectForm navigation={navigation} reset={resetNav}/> }
   	    </div>
   	  </div>
   	)

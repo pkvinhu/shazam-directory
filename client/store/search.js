@@ -12,8 +12,8 @@ const initialState = {
 const CURRENT_SEARCH = 'CURRENT_SEARCH'
 const WRITE_SEARCH = 'WRITE_SEARCH'
 const QUERY_DATA = 'QUERY_DATA'
-// const LOAD_QUERY = 'LOAD_QUERY'
 const FLIP_SUBMIT = 'FLIP_SUBMIT'
+const CLEAR_QUERY = 'CLEAR_QUERY'
 
 
 // ACTION CREATORS
@@ -32,12 +32,12 @@ export const query = data => ({
   data
 })
 
-// export const loadQuery = () => ({
-//   type: LOAD_QUERY
-// })
-
 export const flipSubmit = () => ({
   type: FLIP_SUBMIT
+})
+
+export const clear = () => ({
+  type: QUERY_DATA
 })
 
 // THUNK CREATORS
@@ -67,16 +67,21 @@ const search = (state = initialState, action) => {
     case QUERY_DATA:
     console.log('Reducer', action.data)
       return {
+      	...state,
       	filteredQuery: action.data,
-      	search: '',
       	input: ''
       }
-    // case LOAD_QUERY:
-    //   return {...state}
+
     case FLIP_SUBMIT:
       return {
       	...state,
       	submitted: !state.submitted
+      }
+
+    case CLEAR_QUERY:
+      return {
+      	...state,
+      	filteredQuery: []
       }
 
   	default:
