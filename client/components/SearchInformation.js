@@ -1,33 +1,39 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { loadQuery } from '../store/search'
+import { flipSubmit } from '../store/search'
 
 class SearchInformation extends Component {
   constructor() {
   	super()
   }
 
-  componentDidMount() {
-  	this.props.loadQuery();
+  componentWillUnmount(){
+  	this.props.flipSubmit();
   }
 
   render() {
   	const { data } = this.props;
   	console.log('This', data)
+  	if(data.length > 0) {
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center' }}>
   	    <table>
   	      {data[0].firstName &&
-  	       <StudentBody />}
+  	       <StudentBody data={data}/>}
   	      {data[0].address &&
-  	      	<SchoolBody />}
+  	      	<SchoolBody data={data}/>}
   	      {data[0].admin &&
-  	      	<TeacherBody />}
-  	      {!data.length &&
-  	      	<h3 style={{ backgroundColor: 'yellow' }}>The information you have searched does not exist. Please try again!</h3>}
+  	      	<TeacherBody data={data}/>}
   	    </table>
   	  </div>
   	)
+  } else {
+  	return (
+  	  <div style={{ display: 'flex', justifyContent: 'center' }}>
+  	    <h3 style={{ backgroundColor: 'yellow' }}>The information you have searched does not exist. Please try again!</h3>
+  	  </div>
+  	)
+  }
   }
 }
 
@@ -67,7 +73,7 @@ class TeacherBody extends Component {
   	    return(
   	      	<tr>
   	      	  <th>{each.name}</th>
-  	      	  <th>{each.subjects || 'None'}</th>
+  	      	  <th>{each.subjects.join(', ') || 'None'}</th>
   	      	</tr>
   	      )
   	    })}
@@ -98,16 +104,12 @@ class SchoolBody extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('This is ', state.search.filteredQuery)
-	const {filteredQuery} = state.search
+	const { filteredQuery } = state.search
 	return { data: filteredQuery }
 }
 
 const mapDispatchToProps = dispatch => ({
-  loadQuery: () => dispatch(loadQuery())
+  flipSubmit: () => dispatch(flipSubmit())
 })
 
-connect(mapStateToProps)(StudentBody)
-connect(mapStateToProps)(TeacherBody)
-connect(mapStateToProps)(SchoolBody)
 export default connect(mapStateToProps, mapDispatchToProps)(SearchInformation)

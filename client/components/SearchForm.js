@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { writeSearch, currentSearch, _searchStudents, _searchTeachers, _searchSchools } from '../store/search'
+import { writeSearch, currentSearch, _searchData } from '../store/search'
 import SearchInformation from './SearchInformation'
 import HomePage from './HomePage'
 import NavBar from './NavBar'
@@ -8,7 +8,6 @@ import NavBar from './NavBar'
 class SearchForm extends Component {
   constructor() {
   	super()
-  	this.state = { submitted: false }
   	this.handleChange = this.handleChange.bind(this);
   	this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -20,25 +19,10 @@ class SearchForm extends Component {
 
   handleSubmit(e) {
   	e.preventDefault()
-    const { search, input, _searchStudents, _searchTeachers, _searchSchools } = this.props;
+    const { search, input, _searchData } = this.props;
     
-    if(search === 'students') { 
-      _searchStudents(search, {name: input})
-    }
-
-    else if (search === 'teachers') { 
-      _searchTeachers(search, {name: input})
-    }
-
-    else if (search === 'schools') { 
-      _searchSchools(search, {name: input})
-    }
-
-    this.setState({ submitted: true })
-  }
-
-  componentWillUnmount(){
-  	this.setState({ submitted: false })
+    _searchData(search, {name: input})
+	  
   }
   
   render() {
@@ -46,7 +30,7 @@ class SearchForm extends Component {
     const { handleChange, handleSubmit, renderSearchInfo } = this;
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center'}}>
-  	  {this.state.submitted === false ?
+
   	    <form onSubmit={handleSubmit}>
   	      <input placeholder={`Search ${search}...`} 
   	             name={input}
@@ -54,16 +38,16 @@ class SearchForm extends Component {
   	             onChange={handleChange} 
   	             value={input}></input>
   	      <button>Search</button>
-  	    </form> :
-  	    <SearchInformation />
-  	}
+  	    </form> 
   	  </div>
   	)
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   const { search, input } = state.search
+  const { history } = ownProps
+  console.log(history)
   return { 
   	search: search,
   	input: input
@@ -72,9 +56,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   writeSearch: (content) => dispatch(writeSearch(content)),
-  _searchStudents: (search, input) => dispatch(_searchStudents(search, input)),
-  _searchTeachers: (search, input) => dispatch(_searchTeachers(search, input)),
-  _searchSchools: (search, input) => dispatch(_searchSchools(search, input))
+  _searchData: (search, input) => dispatch(_searchData(search, input))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchForm)

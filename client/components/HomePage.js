@@ -1,16 +1,21 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import NavBar from './NavBar'
 import Welcome from './Welcome'
 import StudentsDirectory from './StudentsDirectory'
 import TeachersDirectory from './TeachersDirectory'
 import SchoolsDirectory from './SchoolsDirectory'
 import SearchForm from './SearchForm'
+import SearchInformation from './SearchInformation'
 
-export default class HomePage extends Component {
+
+class HomePage extends Component {
   
-  render() {
 
+  render() {
+    const { submitted, search } = this.props;
+    console.log(submitted)
   	return (
   	  <div>
   	   <header style={{ backgroundColor: '#ff9933', display: 'flex', justifyContent: 'center' }}>
@@ -21,7 +26,12 @@ export default class HomePage extends Component {
   	    <hr />
   	    <div>
   	      <Route path='/welcome' component={Welcome} />
-          <Route exact path='/search' component={SearchForm} />         
+          <Route exact path='/search' render={()=>(
+              submitted ? (<Redirect to={`/search/${search}`}/>) :
+              (<SearchForm />)
+              )} 
+          />
+          <Route path='/search/:filter' component={SearchInformation} />         
   	      <Route exact path='/students' component={StudentsDirectory} />
   	      <Route exact path='/teachers' component={TeachersDirectory}/>
   	      <Route exact path='/schools' component={SchoolsDirectory}/>
@@ -33,3 +43,13 @@ export default class HomePage extends Component {
   	)
   }
 }
+
+const mapStateToProps = state => {
+  const { submitted, search } = state.search 
+  return { 
+    submitted: submitted,
+    search: search
+  }
+}
+
+export default connect(mapStateToProps)(HomePage)

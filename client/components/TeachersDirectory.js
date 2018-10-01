@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { _fetchTeachers } from '../store/teachers'
+import { Link } from 'react-router-dom'
 
 class TeachersDirectory extends Component {
   
@@ -10,19 +11,31 @@ class TeachersDirectory extends Component {
 
   render() {
   	const { teachers } = this.props;
-  	const categories = [ 'Name', 'Subjects' ];
+
+  	const categories = [ 'Name', 'Subjects', '' ];
+
+    const borderStyle = { 
+      border: '1px solid black', 
+      padding: '25px' 
+    }
+
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center' }}>
-  	    <table>
+  	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '50%' }}>
   	    <tbody>
-  	    <tr>
-  	      {categories.map((category, idx) => {<th key={idx}>{category}</th>})}
+  	    <tr style={borderStyle}>
+  	      {categories.map((category, idx) => {
+            return (
+              <th key={idx}>{category}</th>
+            )
+            })}
   	    </tr>
   	    {teachers.map((teacher, idx) => {
   	      return(
-  	      	<tr>
-  	      	  <th>{teacher.name}</th>
-  	      	  <th>{teacher.subjects.join(', ') || 'None'}</th>
+  	      	<tr style={borderStyle}>
+  	      	  <th style={borderStyle}>{teacher.name}</th>
+  	      	  <th style={borderStyle}>{teacher.subjects.join(', ') || 'None'}</th>
+              <th style={borderStyle}><button><Link to={`/teachers/${teacher.id}`}>See Profile</Link></button></th>
   	      	</tr>
   	      )
   	    })}

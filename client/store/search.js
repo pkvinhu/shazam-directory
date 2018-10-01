@@ -4,14 +4,16 @@ import axios from 'axios'
 const initialState = { 
 	search: '',
 	input: '',
-	filteredQuery: []
+	filteredQuery: [],
+	submitted: false
 }
 
 // ACTION TYPES
 const CURRENT_SEARCH = 'CURRENT_SEARCH'
 const WRITE_SEARCH = 'WRITE_SEARCH'
 const QUERY_DATA = 'QUERY_DATA'
-const LOAD_QUERY = 'LOAD_QUERY'
+// const LOAD_QUERY = 'LOAD_QUERY'
+const FLIP_SUBMIT = 'FLIP_SUBMIT'
 
 
 // ACTION CREATORS
@@ -30,27 +32,20 @@ export const query = data => ({
   data
 })
 
-export const loadQuery = () => ({
-  type: LOAD_QUERY
+// export const loadQuery = () => ({
+//   type: LOAD_QUERY
+// })
+
+export const flipSubmit = () => ({
+  type: FLIP_SUBMIT
 })
 
 // THUNK CREATORS
-export const _searchTeachers = (search, input) => async dispatch => {
-  const response = await axios.post(`/api/shazam/search/teachers`, input)
-  const teachers = response.data;
-  dispatch(query(teachers))
-}
-
-export const _searchStudents = (search, input) => async dispatch => {
-  const response = await axios.post(`/api/shazam/search/students`, input)
-  const students = response.data;
-  dispatch(query(students))
-}
-
-export const _searchSchools = (search, input) => async dispatch => {
-  const response = await axios.post(`/api/shazam/search/schools`, input)
-  const schools = response.data;
-  dispatch(query(schools))
+export const _searchData = (search, input) => async dispatch => {
+  const response = await axios.post(`/api/shazam/search/${search}`, input)
+  const info = response.data;
+  const action = query(info)
+  dispatch(action)
 }
 
 
@@ -76,8 +71,13 @@ const search = (state = initialState, action) => {
       	search: '',
       	input: ''
       }
-    case LOAD_QUERY:
-      return {...state}
+    // case LOAD_QUERY:
+    //   return {...state}
+    case FLIP_SUBMIT:
+      return {
+      	...state,
+      	submitted: !state.submitted
+      }
 
   	default:
   	  return state;

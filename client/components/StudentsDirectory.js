@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { _fetchStudents } from '../store/students'
+import { Link } from 'react-router-dom'
 
 class StudentsDirectory extends Component {
   
@@ -10,21 +11,34 @@ class StudentsDirectory extends Component {
 
   render() {
   	const { students } = this.props;
-  	const categories = [ 'First Name', 'Last Name', 'GPA', 'Exracurriculars'];
+
+  	const categories = [ 'First Name', 'Last Name', 'GPA', 'Exracurriculars', 'Profile Picture', ''];
+
+  	const borderStyle = { 
+      border: '1px solid black', 
+      padding: '25px' 
+    }
+
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center' }}>
-  	    <table style={{ outlineStyle: 'solid' }}>
+  	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '70%' }}>
   	    <tbody >
-  	    <tr style={{ border: '2px solid black'}}>
-  	      {categories.map((category, idx) => {<th key={idx} style={{ border: '2px solid black'}}>{category}</th>})}
+  	    <tr style={borderStyle}>
+  	      {categories.map((category, idx) => {
+  	      	return (
+  	      		<th key={idx}>{category}</th>
+  	      	)}
+  	      	)}
   	    </tr>
   	    {students.map((student, idx) => {
   	      return(
-  	      	<tr style={{ border: '2px solid black'}}>
-  	      	  <th>{student.firstName}</th>
-  	      	  <th>{student.lastName}</th>
-  	      	  <th>{student.gpa}</th>
-  	      	  <th>{student.extracurriculars || 'None'}</th>
+  	      	<tr style={borderStyle}>
+  	      	  <th style={borderStyle}>{student.firstName}</th>
+  	      	  <th style={borderStyle}>{student.lastName}</th>
+  	      	  <th style={borderStyle}>{student.gpa}</th>
+  	      	  <th style={borderStyle}>{student.extracurriculars || 'None'}</th>
+  	      	  <th style={borderStyle}>{student.img}</th>
+  	      	  <th style={borderStyle}><button><Link to={`/students/${student.id}`}>See Profile</Link></button></th>
   	      	</tr>
   	      )
   	    })}

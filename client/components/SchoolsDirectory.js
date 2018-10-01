@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { _fetchSchools } from '../store/schools'
+import { Link } from 'react-router-dom'
 
 class SchoolsDirectory extends Component {
   
@@ -10,19 +11,31 @@ class SchoolsDirectory extends Component {
 
   render() {
   	const { schools } = this.props;
-  	const categories = [ 'Name', 'Address' ];
+  	
+    const categories = [ 'Name', 'Address', '' ];
+    
+    const borderStyle = { 
+      border: '1px solid black', 
+      padding: '25px' 
+    }
+
   	return (
-  	  <div>
-  	    <table>
+  	  <div style={{ display: 'flex', justifyContent: 'center' }}>
+  	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '50%' }}>
   	    <tbody>
-  	    <tr>
-  	      {categories.map((category, idx) => {<th key={idx}>{category}</th>})}
+  	    <tr style={borderStyle}>
+  	      {categories.map((category, idx) => {
+            return (
+              <th key={idx}>{category} </th>
+            )
+          })}
   	    </tr>
   	    {schools.map((school, idx) => {
   	      return(
-  	      	<tr>
-  	      	  <th>{school.name}</th>
-  	      	  <th>{school.address}</th>
+  	      	<tr style={borderStyle}>
+  	      	  <th style={borderStyle}>{school.name}</th>
+  	      	  <th style={borderStyle}>{school.address}</th>
+              <th style={borderStyle}><button><Link to={`/schools/${school.id}`}>See Profile</Link></button></th>
   	      	</tr>
   	      )
   	    })}
