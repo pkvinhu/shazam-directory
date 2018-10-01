@@ -7,8 +7,6 @@
     "test:server": "DATABASE_URL=postgres://localhost:5432/shazam-directory mocha -w server/testing/*",
     "test:client": "mocha ./client/*spec.js --require babel-polyfill --require babel-core/register",
     "test": "npm run test:server & npm run test:client",
-    "db-init": "pg-init shazam-directory",
-    "postinstall": "npm run db-init",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "start:dev": "npm run webpack -- --watch --mode=development & DATABASE_URL=postgres://localhost:5432/shazam-directory nodemon server/index.js"
   },

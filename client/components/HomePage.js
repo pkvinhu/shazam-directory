@@ -26,11 +26,7 @@ class HomePage extends Component {
   	    <hr />
   	    <div>
   	      <Route path='/welcome' component={Welcome} />
-          <Route exact path='/search' render={()=>(
-              submitted ? (<Redirect to={`/search/${search}`}/>) :
-              (<SearchForm />)
-              )} 
-          />
+          <Route exact path='/search' component={SearchForm} />
           <Route path='/search/:filter' component={SearchInformation} />         
   	      <Route exact path='/students' component={StudentsDirectory} />
   	      <Route exact path='/teachers' component={TeachersDirectory}/>
