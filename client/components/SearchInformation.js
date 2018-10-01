@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import store from '../store'
+import { loadQuery } from '../store/search'
 
 class SearchInformation extends Component {
   constructor() {
   	super()
   }
 
+  componentDidMount() {
+  	this.props.loadQuery();
+  }
+
   render() {
   	const { data } = this.props;
-  	console.log(data)
+  	console.log('This', data)
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center' }}>
   	    <table>
@@ -98,7 +102,12 @@ const mapStateToProps = state => {
 	const {filteredQuery} = state.search
 	return { data: filteredQuery }
 }
+
+const mapDispatchToProps = dispatch => ({
+  loadQuery: () => dispatch(loadQuery())
+})
+
 connect(mapStateToProps)(StudentBody)
 connect(mapStateToProps)(TeacherBody)
 connect(mapStateToProps)(SchoolBody)
-export default connect(mapStateToProps)(SearchInformation)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchInformation)

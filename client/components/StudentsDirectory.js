@@ -12,7 +12,7 @@ class StudentsDirectory extends Component {
   	const { students } = this.props;
   	const categories = [ 'First Name', 'Last Name', 'GPA', 'Exracurriculars'];
   	return (
-  	  <div>
+  	  <div style={{ display: 'flex', justifyContent: 'center' }}>
   	    <table style={{ outlineStyle: 'solid' }}>
   	    <tbody >
   	    <tr style={{ border: '2px solid black'}}>
@@ -21,10 +21,10 @@ class StudentsDirectory extends Component {
   	    {students.map((student, idx) => {
   	      return(
   	      	<tr style={{ border: '2px solid black'}}>
-  	      	  <th  >{student.firstName}</th>
-  	      	  <th >{student.lastName}</th>
-  	      	  <th >{student.gpa}</th>
-  	      	  <th >{student.extracurriculars || 'None'}</th>
+  	      	  <th>{student.firstName}</th>
+  	      	  <th>{student.lastName}</th>
+  	      	  <th>{student.gpa}</th>
+  	      	  <th>{student.extracurriculars || 'None'}</th>
   	      	</tr>
   	      )
   	    })}

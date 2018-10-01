@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import SelectForm from './SelectForm'
+import CreateForm from './CreateForm'
 
 export default class Welcome extends Component {
   constructor() {
@@ -39,8 +40,9 @@ export default class Welcome extends Component {
   	      )
   	    })}
         {navigation === 'search' &&
-          <SelectForm />
-        }
+          <SelectForm /> }
+        {navigation === 'create' &&
+         <CreateForm /> }
   	    </div>
   	  </div>
   	)

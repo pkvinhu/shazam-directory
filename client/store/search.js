@@ -11,6 +11,7 @@ const initialState = {
 const CURRENT_SEARCH = 'CURRENT_SEARCH'
 const WRITE_SEARCH = 'WRITE_SEARCH'
 const QUERY_DATA = 'QUERY_DATA'
+const LOAD_QUERY = 'LOAD_QUERY'
 
 
 // ACTION CREATORS
@@ -29,22 +30,25 @@ export const query = data => ({
   data
 })
 
+export const loadQuery = () => ({
+  type: LOAD_QUERY
+})
+
 // THUNK CREATORS
 export const _searchTeachers = (search, input) => async dispatch => {
-  const response = await axios.post(`/api/shazam/search/${search}`, input)
-  const students = response.data;
+  const response = await axios.post(`/api/shazam/search/teachers`, input)
+  const teachers = response.data;
   dispatch(query(teachers))
 }
 
 export const _searchStudents = (search, input) => async dispatch => {
-  const response = await axios.post(`/api/shazam/search/${search}`, input)
+  const response = await axios.post(`/api/shazam/search/students`, input)
   const students = response.data;
   dispatch(query(students))
-  console.log('Thunk', students)
 }
 
 export const _searchSchools = (search, input) => async dispatch => {
-  const response = await axios.post(`/api/shazam/search/${search}`, input)
+  const response = await axios.post(`/api/shazam/search/schools`, input)
   const schools = response.data;
   dispatch(query(schools))
 }
@@ -72,6 +76,8 @@ const search = (state = initialState, action) => {
       	search: '',
       	input: ''
       }
+    case LOAD_QUERY:
+      return {...state}
 
   	default:
   	  return state;

@@ -22,8 +22,6 @@ class SearchForm extends Component {
   	e.preventDefault()
     const { search, input, _searchStudents, _searchTeachers, _searchSchools } = this.props;
     
-    this.setState({ submitted: true })
-    
     if(search === 'students') { 
       _searchStudents(search, {name: input})
     }
@@ -35,6 +33,8 @@ class SearchForm extends Component {
     else if (search === 'schools') { 
       _searchSchools(search, {name: input})
     }
+
+    this.setState({ submitted: true })
   }
 
   componentWillUnmount(){
