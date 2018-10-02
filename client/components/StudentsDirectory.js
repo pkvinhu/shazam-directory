@@ -35,7 +35,7 @@ class StudentsDirectory extends Component {
   	      	<tr style={borderStyle}>
   	      	  <th style={borderStyle}>{student.name}</th>
   	      	  <th style={borderStyle}>{student.gpa}</th>
-  	      	  <th style={borderStyle}>{student.extracurriculars || 'None'}</th>
+  	      	  <th style={borderStyle}>{student.extracurricular || 'None'}</th>
   	      	  <th style={borderStyle}>{student.img}</th>
   	      	  <th style={borderStyle}><button><Link to={`/students/${student.id}`}>See Profile</Link></button></th>
   	      	</tr>

@@ -27,7 +27,8 @@ const WRITE_SUBJECTS = 'WRITE_SUBJECTS'
 const WRITE_ADDRESS = 'WRITE_ADDRESS'
 const WRITE_DESCRIPTION = 'WRITE_DESCRIPTION'
 
-const FLIP_SUBMIT = 'FLIP_SUBMIT'
+const FLIP_SUBMITTED = 'FLIP_SUBMITTED'
+const RESET = 'RESET'
 
 
 // ACTION CREATORS
@@ -71,18 +72,24 @@ export const writeDes = description => ({
   description
 })
 
-export const flipSubmit = () => ({
-  type: FLIP_SUBMIT
+export const flipSubmitted = () => ({
+  type: FLIP_SUBMITTED
+})
+
+export const reset = () => ({
+  type: RESET
 })
 
 
 // THUNK CREATORS
 export const _createStudent = (create, input) => async dispatch => {
+  console.log('This is the input', input)
   const name = input.name;
   const gpa = input.gpa*1;
-  const subjects = input.subjects.split(' ').trim();
-  const response = await axios.post(`/api/shazam/${create}/create`, { name, gpa, subjects })
+  const extracurricular = input.extracurricular.split(' ');
+  const response = await axios.post('/api/shazam/students/create', { name, gpa, extracurricular })
   const student = response.data;
+  console.log('This is the student', student)
 }
 
 
@@ -138,11 +145,14 @@ const creating = (state = initialState, action) => {
   	  	description: action.description
   	  }
 
-  	case FLIP_SUBMIT:
+  	case FLIP_SUBMITTED:
       return {
       	...state,
       	submitted: !state.submitted
       }
+
+    case RESET:
+      return initialState;
 
   	default:
   	  return state;

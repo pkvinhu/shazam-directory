@@ -25,7 +25,14 @@ const Student = conn.define('student', {
   	  }
   	}
   },
-  extracurricular: Sequelize.ARRAY(Sequelize.STRING),
+  extracurricular: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+    get(){
+      if(this.getDataValue('extracurricular') !== null) {
+        return this.getDataValue('extracurricular').join(', ')
+      }
+    }
+  },
   admin: {
   	type: Sequelize.BOOLEAN,
   	defaultValue: false
@@ -101,19 +108,19 @@ School.hasMany(Teacher, { as: 'Faculty' })
 Teacher.belongsTo(School)
 
 const syncAndSeed = () => {
-  return conn.sync({ force: true })
-  .then(() => {
-    return Promise.all([
-      Student.create({ name: 'Harry Problem', gpa: 3.85}),
-      Student.create({ name: 'Tarry Choo', gpa: 3.85}),
-      Student.create({ name: 'Nana Baba', gpa: 3.85}),
-      Teacher.create({ name: 'Harry Thomas', gender: 'M', subjects: ['History', 'Anthropology']}),
-      Teacher.create({ name: 'Barry Tomas', gender: 'M', subjects: ['Math', 'Accounting']}),
-      Teacher.create({ name: 'Larry Roma', gender: 'M', subjects: ['Theology', 'Sociology']}),
-      School.create({ name: 'ABCD'}),
-      School.create({ name: 'EFGH'}),
-    ])
-  })
+  return conn.sync()
+  // .then(() => {
+  //   return Promise.all([
+  //     Student.create({ name: 'Harry Problem', gpa: 3.85}),
+  //     Student.create({ name: 'Tarry Choo', gpa: 3.85}),
+  //     Student.create({ name: 'Nana Baba', gpa: 3.85}),
+  //     Teacher.create({ name: 'Harry Thomas', gender: 'M', subjects: ['History', 'Anthropology']}),
+  //     Teacher.create({ name: 'Barry Tomas', gender: 'M', subjects: ['Math', 'Accounting']}),
+  //     Teacher.create({ name: 'Larry Roma', gender: 'M', subjects: ['Theology', 'Sociology']}),
+  //     School.create({ name: 'ABCD'}),
+  //     School.create({ name: 'EFGH'}),
+  //   ])
+  // })
   .then(() => {
     console.log('different')
   })

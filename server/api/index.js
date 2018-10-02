@@ -116,7 +116,10 @@ router.post('/search/:filter', (req, res, next) => {
 //CREATE
 router.post('/students/create', (req, res, next) => {
   Student.create(req.body)
-  .then(student => res.send(student))
+  .then(student => {
+    console.log(student)
+    res.send(student)
+  })
   .catch(next)
 })
 
