@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { flipSubmit, clear } from '../store/search'
 
 class SearchInformation extends Component {
-  componentDidUnmount(){
-  	this.props.clear();
-  }
+  // componentWillUnmount(){
+  // 	this.props.clear();
+  // }
 
   render() {
   	const { data } = this.props;

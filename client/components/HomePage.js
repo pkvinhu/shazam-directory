@@ -9,6 +9,7 @@ import SchoolsDirectory from './SchoolsDirectory'
 import SearchForm from './SearchForm'
 import SearchInformation from './SearchInformation'
 import CreateForm from './CreateForm'
+import SingleProfile from './SingleProfile'
 
 
 export default class HomePage extends Component {
@@ -28,13 +29,15 @@ export default class HomePage extends Component {
   	      <Route path='/welcome' component={Welcome} />
           <Route exact path='/search' component={SearchForm} />
           <Route path='/search/:filter' component={SearchInformation} />
-          <Route path='/create' component={CreateForm} />         
+          <Route path='/students/create' component={CreateForm} />   
+          <Route path='/teachers/create' component={CreateForm} />   
+          <Route path='/schools/create' component={CreateForm} />     
   	      <Route exact path='/students' component={StudentsDirectory} />
   	      <Route exact path='/teachers' component={TeachersDirectory}/>
   	      <Route exact path='/schools' component={SchoolsDirectory}/>
-  	      <Route path='/students/:id' />
-  	      <Route path='/teachers/:id' />
-  	      <Route path='/schools/:id' />
+  	      <Route path='/students/:id' component={SingleProfile} />
+  	      <Route path='/teachers/:id' component={SingleProfile}/>
+  	      <Route path='/schools/:id' component={SingleProfile}/>
   	    </div>
   	  </div>
   	)

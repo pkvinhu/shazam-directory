@@ -47,6 +47,7 @@ constructor(){
 	  	         value={name}></input>
   	      <label>Gender</label>
   	      <select name='gender'>
+  	             <option value={gender}>--</option>
   	    	     <option value={gender}>M</option>
   	    	     <option value={gender}>F</option>
   	    	     </select>

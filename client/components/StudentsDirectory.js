@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { _fetchStudents } from '../store/students'
+import { _fetchStudents, _fetchProfile } from '../store/students'
 import { clear } from '../store/search'
 import { reset } from '../store/create'
 import { Link } from 'react-router-dom'
 
 class StudentsDirectory extends Component {
-  
+  constructor() {
+  	super()
+  	this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit(e){
+  	e.preventDefault();
+  	this.props._fetchProfile(e.target.key)
+  }
+
   componentDidMount() {
   	const { _fetchStudents, clear, reset } = this.props;
   	_fetchStudents()
@@ -15,7 +24,8 @@ class StudentsDirectory extends Component {
   }
 
   render() {
-  	const { students } = this.props;
+  	const { students, profileView, currentStudent } = this.props;
+  	const { handleSubmit } = this;
 
   	const categories = [ 'First Name', 'GPA', 'Exracurriculars', 'Profile Picture', ''];
 
@@ -23,7 +33,10 @@ class StudentsDirectory extends Component {
       border: '1px solid black', 
       padding: '25px' 
     }
-
+    if(profileView) {
+      return (<Redirect to={`/api/shazam/students/${currentStudent.id}`} />)
+    } 
+    else if(!profileView) {
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center' }}>
   	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '70%' }}>
@@ -37,12 +50,12 @@ class StudentsDirectory extends Component {
   	    </tr>
   	    {students.map((student, idx) => {
   	      return(
-  	      	<tr style={borderStyle}>
+  	      	<tr key={student.id} style={borderStyle} onSubmit={handleSubmit}>
   	      	  <th style={borderStyle}>{student.name}</th>
   	      	  <th style={borderStyle}>{student.gpa}</th>
   	      	  <th style={borderStyle}>{student.extracurricular || 'None'}</th>
   	      	  <th style={borderStyle}>{student.img}</th>
-  	      	  <th style={borderStyle}><button><Link to={`/students/${student.id}`}>See Profile</Link></button></th>
+  	      	  <th style={borderStyle}><button>See Profile</button></th>
   	      	</tr>
   	      )
   	    })}
@@ -50,21 +63,25 @@ class StudentsDirectory extends Component {
   	    </table>
   	  </div>
   	)
+    }
   }
 }
 
 const mapStateToProps = (state) => {
-  const { directory, input } = state.students
+  const { directory, input, profile, currentStudent } = state.students
   return {  
   	students: directory,
-  	input: input 
+  	input: input,
+  	profile: profile,
+  	currentStudent: currentStudent 
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   _fetchStudents: () => dispatch(_fetchStudents()),
   clear: () => dispatch(clear()),
-  reset: () => dispatch(reset())
+  reset: () => dispatch(reset()),
+  _fetchProfile: (id) => dispatch(_fetchProfile(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentsDirectory)
