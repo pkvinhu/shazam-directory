@@ -25,7 +25,7 @@ class StudentCreate extends Component {
 
   handleSubmit(e){
   	e.preventDefault()
-  	const { create, name, gpa, extracurricular, _createStudent, flipSubmitted, _fetchStudents } = this.props
+  	const { create, name, gpa, extracurricular, _createStudent, flipSubmitted } = this.props
   	_createStudent( create, {name, gpa, extracurricular})
   	.then(()=>flipSubmitted());
   }
@@ -80,8 +80,7 @@ const mapDispatchToProps = dispatch => ({
   writeExtra: (ex) => dispatch(writeExtra(ex)),
   flipSubmitted: () => dispatch(flipSubmitted()),
   _createStudent: (search, input) => dispatch(_createStudent(search, input)),
-  reset: () => dispatch(reset()),
-  _fetchStudents: () => dispatch(_fetchStudents())
+  reset: () => dispatch(reset())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentCreate)

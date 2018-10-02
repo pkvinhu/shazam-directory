@@ -28,7 +28,10 @@ class CreateForm extends Component {
 	  	  <h2>Basic Information</h2>
 	  	  {create === 'students' &&
 	  	  <StudentCreate />}
-
+	  	  {create === 'teachers' &&
+	  	  <TeacherCreate />}
+	  	  {create === 'schools' &&
+	  	  <SchoolCreate />}
 	  	</div>
 	  )
 	}
@@ -43,11 +46,5 @@ const mapStateToProps = (state, ownProps) => {
   	submitted: submitted
   }
 }
-
-// const mapDispatchToProps = dispatch => ({
-//   writeAddress: (address) => dispatch(writeAddress(address)),
-//   writeDescription: (description) => dispatch(writeDescription(description)),
-// })
-
 
 export default connect(mapStateToProps)(CreateForm)

@@ -83,13 +83,28 @@ export const reset = () => ({
 
 // THUNK CREATORS
 export const _createStudent = (create, input) => async dispatch => {
-  console.log('This is the input', input)
   const name = input.name;
   const gpa = input.gpa*1;
   const extracurricular = input.extracurricular.split(' ');
   const response = await axios.post('/api/shazam/students/create', { name, gpa, extracurricular })
   const student = response.data;
-  console.log('This is the student', student)
+}
+
+export const _createTeacher = (create, input) => async dispatch => {
+  const name = input.name;
+  const gender = input.gender;
+  const subjects = input.subjects.split(' ');
+  const response = await axios.post('/api/shazam/teachers/create', { name, gender, subjects })
+  const teacher = response.data;
+}
+
+export const _createSchool = (create, input) => async dispatch => {
+  const name = input.name;
+  const address = input.address || null;
+  const description = input.description || null;
+  const response = await axios.post('/api/shazam/schools/create', { name, address, description })
+  const school = response.data;
+  console.log('This is the school', school)
 }
 
 

@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { _fetchSchools } from '../store/schools'
+import { clear } from '../store/search'
+import { reset } from '../store/create'
 import { Link } from 'react-router-dom'
 
 class SchoolsDirectory extends Component {
   
-  componentDidMount(){
-    this.props._fetchSchools()
+  componentDidMount() {
+    const { _fetchSchools, clear, reset } = this.props;
+    _fetchSchools()
+    clear()
+    reset()
   }
 
   render() {
@@ -55,7 +60,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  _fetchSchools: () => dispatch(_fetchSchools())
+  _fetchSchools: () => dispatch(_fetchSchools()),
+  clear: () => dispatch(clear()),
+  reset: () => dispatch(reset())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SchoolsDirectory)
