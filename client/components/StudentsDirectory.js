@@ -3,17 +3,18 @@ import { connect } from 'react-redux'
 import { _fetchStudents, _fetchProfile } from '../store/students'
 import { clear } from '../store/search'
 import { reset } from '../store/create'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 class StudentsDirectory extends Component {
   constructor() {
   	super()
-  	this.handleSubmit = this.handleSubmit.bind(this)
+  	this.handleClick = this.handleClick.bind(this)
   }
 
-  handleSubmit(e){
+  handleClick(e){
   	e.preventDefault();
-  	this.props._fetchProfile(e.target.key)
+  	console.log('This', e.target.name)
+  	this.props._fetchProfile(e.target.name)
   }
 
   componentDidMount() {
@@ -24,8 +25,8 @@ class StudentsDirectory extends Component {
   }
 
   render() {
-  	const { students, profileView, currentStudent } = this.props;
-  	const { handleSubmit } = this;
+  	const { students, profile, currentStudent } = this.props;
+  	const { handleClick } = this;
 
   	const categories = [ 'First Name', 'GPA', 'Exracurriculars', 'Profile Picture', ''];
 
@@ -33,10 +34,10 @@ class StudentsDirectory extends Component {
       border: '1px solid black', 
       padding: '25px' 
     }
-    if(profileView) {
-      return (<Redirect to={`/api/shazam/students/${currentStudent.id}`} />)
+    if(profile) {
+      return (<Redirect to={`/students/${currentStudent.id}`} />)
     } 
-    else if(!profileView) {
+    else if(!profile) {
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center' }}>
   	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '70%' }}>
@@ -50,12 +51,12 @@ class StudentsDirectory extends Component {
   	    </tr>
   	    {students.map((student, idx) => {
   	      return(
-  	      	<tr key={student.id} style={borderStyle} onSubmit={handleSubmit}>
+  	      	<tr style={borderStyle}>
   	      	  <th style={borderStyle}>{student.name}</th>
   	      	  <th style={borderStyle}>{student.gpa}</th>
   	      	  <th style={borderStyle}>{student.extracurricular || 'None'}</th>
   	      	  <th style={borderStyle}>{student.img}</th>
-  	      	  <th style={borderStyle}><button>See Profile</button></th>
+  	      	  <th style={borderStyle}><button name={student.id} onClick={handleClick}>See Profile</button></th>
   	      	</tr>
   	      )
   	    })}

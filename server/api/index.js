@@ -44,6 +44,7 @@ router.get('/schools', (req, res, next) => {
 router.get('/students/:id', (req, res, next) => {
   Student.findById(req.params.id)
   .then(student => {
+    console.log(student)
     if(!student) res.sendStatus(404)
   	else res.send(student)
   })
