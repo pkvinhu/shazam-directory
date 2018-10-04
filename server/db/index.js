@@ -51,7 +51,7 @@ const School = conn.define('school', {
   },
   img: {
     type: Sequelize.STRING,
-    defaultValue: faker.image.nature()
+    defaultValue: 'https://loremflickr.com/320/240'
   },
   description: {
     type: Sequelize.TEXT,
@@ -109,18 +109,6 @@ Teacher.belongsTo(School)
 
 const syncAndSeed = () => {
   return conn.sync()
-  // .then(() => {
-  //   return Promise.all([
-  //     Student.create({ name: 'Harry Problem', gpa: 3.85}),
-  //     Student.create({ name: 'Tarry Choo', gpa: 3.85}),
-  //     Student.create({ name: 'Nana Baba', gpa: 3.85}),
-  //     Teacher.create({ name: 'Harry Thomas', gender: 'M', subjects: ['History', 'Anthropology']}),
-  //     Teacher.create({ name: 'Barry Tomas', gender: 'M', subjects: ['Math', 'Accounting']}),
-  //     Teacher.create({ name: 'Larry Roma', gender: 'M', subjects: ['Theology', 'Sociology']}),
-  //     School.create({ name: 'ABCD'}),
-  //     School.create({ name: 'EFGH'}),
-  //   ])
-  // })
   .then(() => {
     console.log('different')
   })

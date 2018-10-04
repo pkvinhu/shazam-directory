@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { clearCurrentStu } from '../store/students' 
 import { clearCurrentT } from '../store/teachers' 
-import { clearCurrentSch } from '../store/schools' 
+import { clearCurrentSch } from '../store/schools'
+import { resetProfile } from '../store/profile' 
 
 class SingleProfile extends Component {
 
   componentWillUnmount(){
-  	const { clearCurrentStu, clearCurrentT, clearCurrentSch } = this.props;
-  	clearCurrentStu();
-  	clearCurrentT();
-  	clearCurrentSch();
+  	const { clearCurrentStu, clearCurrentT, clearCurrentSch, profile, resetProfile } = this.props;
+  	if(profile === 'students' ) {clearCurrentStu()}
+  	else if (profile === 'teachers') {clearCurrentT()}
+  	else if (profile === 'schools') {clearCurrentSch()}
+  	resetProfile();
   }
 
   render() {
@@ -116,7 +118,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   clearCurrentStu: () => dispatch(clearCurrentStu()),
   clearCurrentT: () => dispatch(clearCurrentT()),
-  clearCurrentSch: () => dispatch(clearCurrentSch())
+  clearCurrentSch: () => dispatch(clearCurrentSch()),
+  resetProfile: () => dispatch(resetProfile())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProfile)

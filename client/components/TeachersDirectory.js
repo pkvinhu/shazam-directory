@@ -15,8 +15,8 @@ class TeachersDirectory extends Component {
   handleClick(e){
     e.preventDefault();
     const { profileType, _fetchTProfile } = this.props;
-    profileType('teachers');
-    _fetchTProfile(e.target.name);
+    _fetchTProfile(e.target.name)
+    .then(() => profileType('teachers'))
   }
 
   componentDidMount() {

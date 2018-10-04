@@ -6,12 +6,16 @@
 
 // ACTION TYPE
 const PROFILE_TYPE = 'PROFILE_TYPE'
-
+const RESET_PROFILE = 'RESET_PROFILE'
 
 // ACTION CREATOR
 export const profileType = profile => ({
    type: PROFILE_TYPE,
    profile
+})
+
+export const resetProfile = () => ({
+  type: RESET_PROFILE
 })
 
 
@@ -22,6 +26,12 @@ const profile = (state = initialState, action) => {
   	  return {
   	  	...state,
   	  	profile: action.profile
+  	  }
+
+  	case RESET_PROFILE:
+  	  return {
+  	  	...state,
+  	  	profile: ''
   	  }
 
   	default:

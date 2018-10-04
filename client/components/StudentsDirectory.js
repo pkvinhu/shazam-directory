@@ -26,6 +26,12 @@ class StudentsDirectory extends Component {
   	reset()
   }
 
+  // componentWillUnmount(){
+  // 	const { clear, reset } = this.props;
+  // 	clear()
+  // 	reset()
+  // }
+
   render() {
   	const { students, profile, currentStudent } = this.props;
   	const { handleClick } = this;
