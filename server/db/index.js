@@ -67,7 +67,7 @@ const Teacher = conn.define('teacher', {
     get(){
       return this.getDataValue('gender') === 'M' ?
       'Mr. ' + this.getDataValue('name').split(' ')[1] :
-      'Mrs. ' + this.getDataValue('name').split(' ')[1]
+      'Ms. ' + this.getDataValue('name').split(' ')[1]
     }
   },
   gender: {

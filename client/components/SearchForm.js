@@ -22,7 +22,7 @@ class SearchForm extends Component {
   	e.preventDefault()
     const { search, input, _searchData, flipSubmit } = this.props;
     _searchData(search, {name: input})
-	flipSubmit()
+	.then(()=>flipSubmit())
   }
   
   render() {

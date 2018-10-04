@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { flipSubmit, clear } from '../store/search'
 
 class SearchInformation extends Component {
-  // componentWillUnmount(){
-  // 	this.props.clear();
-  // }
+  componentWillUnmount(){
+  	this.props.clear();
+  }
 
   render() {
   	const { data } = this.props;
@@ -19,7 +19,7 @@ class SearchInformation extends Component {
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center' }}>
   	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '50%' }}>
-  	      {!data[0].admin &&
+  	      {data[0].gpa &&
   	       <StudentBody data={data} borderStyle={borderStyle}/>}
   	      {data[0].address &&
   	      	<SchoolBody data={data} borderStyle={borderStyle}/>}
@@ -89,8 +89,8 @@ class SchoolBody extends Component {
   	const categories = [ 'Name', 'Address']
   	return (
   	  <tbody>
-  	    {categories.map(c => (<th>{c}</th>))}
-  	    {data.map((each, idx) => {
+  	    {categories.map(cat => (<th>{cat}</th>))}
+  	    {data.map(each => {
   	    return(
   	      	<tr style={borderStyle}>
   	      	  <th style={borderStyle}>{each.name}</th>
