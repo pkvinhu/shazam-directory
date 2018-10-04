@@ -25,9 +25,9 @@ class StudentCreate extends Component {
 
   handleSubmit(e){
   	e.preventDefault()
-  	const { create, name, gpa, extracurricular, _createStudent, flipSubmitted } = this.props
+  	const { create, name, gpa, extracurricular, _createStudent, flipSubmitted, submitted } = this.props
   	_createStudent( create, {name, gpa, extracurricular})
-  	.then(()=>flipSubmitted());
+  	.then(()=>flipSubmitted())
   }
 
   componentWillUnmount(){
@@ -65,12 +65,13 @@ class StudentCreate extends Component {
 }
 
 const mapStateToProps = state => {
-  const { create, name, gpa, extracurricular } = state.creating
+  const { create, name, gpa, extracurricular, submitted } = state.creating
   return {
   	create: create,
   	name: name,
   	gpa: gpa,
-  	extracurricular: extracurricular
+  	extracurricular: extracurricular,
+    submitted: submitted
   }
 }
 

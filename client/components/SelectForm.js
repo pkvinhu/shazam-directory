@@ -44,8 +44,8 @@ class SelectForm extends Component {
 	  	  <label>Who are you searching for?</label> :
 	  	  <label>Who would you like to create?</label>}
 	  	  <select name='input'>
-	  	  {categories.map(category => {
-	  	  	return (<option value={category}>{category}</option>)
+	  	  {categories.map((category, idx) => {
+	  	  	return (<option key={idx} value={category}>{category}</option>)
 	  	  })}
 	  	  </select>
 	  	  <button>Select</button>

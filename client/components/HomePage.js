@@ -13,7 +13,6 @@ import SingleProfile from './SingleProfile'
 
 
 export default class HomePage extends Component {
-  
 
   render() {
     // const { submitted, search } = this.props;
@@ -29,15 +28,13 @@ export default class HomePage extends Component {
   	      <Route path='/welcome' component={Welcome} />
           <Route exact path='/search' component={SearchForm} />
           <Route path='/search/:filter' component={SearchInformation} />
-          <Route path='/students/create' component={CreateForm} />   
-          <Route path='/teachers/create' component={CreateForm} />   
-          <Route path='/schools/create' component={CreateForm} />     
+          <Route path='/create' component={CreateForm} />       
   	      <Route exact path='/students' component={StudentsDirectory} />
   	      <Route exact path='/teachers' component={TeachersDirectory}/>
   	      <Route exact path='/schools' component={SchoolsDirectory}/>
-  	      <Route path='/students/:id' component={SingleProfile} />
-  	      <Route path='/teachers/:id' component={SingleProfile}/>
-  	      <Route path='/schools/:id' component={SingleProfile}/>
+  	      <Route exact path='/students/:id' component={SingleProfile} />
+  	      <Route exact path='/teachers/:id' component={SingleProfile}/>
+  	      <Route exact path='/schools/:id' component={SingleProfile}/>
   	    </div>
   	  </div>
   	)

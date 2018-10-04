@@ -79,10 +79,7 @@ const search = (state = initialState, action) => {
       }
 
     case CLEAR_QUERY:
-      return {
-      	...state,
-      	filteredQuery: []
-      }
+      return initialState
 
   	default:
   	  return state;

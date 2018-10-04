@@ -10,7 +10,7 @@ class CreateForm extends Component {
 
 	render() {
 	  const { create, submitted } = this.props;
-
+	  console.log(submitted)
 	  if(submitted && create === 'students') {
 	  	return <Redirect to='/students' />
 	  } 

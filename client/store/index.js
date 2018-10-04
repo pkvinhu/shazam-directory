@@ -6,13 +6,15 @@ import teachers from './teachers'
 import schools from './schools'
 import search from './search'
 import creating from './create'
+import profile from './profile'
 
 const reducer = combineReducers({
   students,
   teachers,
   schools,
   search,
-  creating
+  creating,
+  profile
 });
 
 const store = createStore(reducer, applyMiddleware(loggingMiddleware, thunkMiddleware))

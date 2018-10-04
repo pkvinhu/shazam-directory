@@ -23,9 +23,9 @@ constructor(){
 
   handleSubmit(e){
   	e.preventDefault()
-  	const { create, name, gender, subjects, _createTeacher, flipSubmitted } = this.props
+  	const { create, name, gender, subjects, _createTeacher, flipSubmitted, submitted } = this.props
   	_createTeacher( create, {name, gender, subjects})
-  	.then(()=>flipSubmitted());
+  	.then(()=>flipSubmitted())
   }
 
   componentWillUnmount(){
@@ -65,12 +65,13 @@ constructor(){
 }
 
 const mapStateToProps = state => {
-  const { create, name, subjects, gender } = state.creating
+  const { create, name, subjects, gender, submitted } = state.creating
   return {
   	create: create,
   	name: name,
   	subjects: subjects,
-  	gender: gender
+  	gender: gender,
+    submitted: submitted
   }
 }
 

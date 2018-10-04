@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { _fetchStudents, _fetchProfile } from '../store/students'
+import { _fetchStudents, _fetchStuProfile } from '../store/students'
+import { profileType } from '../store/profile'
 import { clear } from '../store/search'
 import { reset } from '../store/create'
 import { Link, Redirect } from 'react-router-dom'
@@ -11,10 +12,11 @@ class StudentsDirectory extends Component {
   	this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(e){
+   handleClick(e){
   	e.preventDefault();
-  	console.log('This', e.target.name)
-  	this.props._fetchProfile(e.target.name)
+  	const { profileType, _fetchStuProfile } = this.props;
+  	_fetchStuProfile(e.target.name)
+  	.then(()=>profileType('students'))
   }
 
   componentDidMount() {
@@ -34,6 +36,7 @@ class StudentsDirectory extends Component {
       border: '1px solid black', 
       padding: '25px' 
     }
+
     if(profile) {
       return (<Redirect to={`/students/${currentStudent.id}`} />)
     } 
@@ -55,7 +58,6 @@ class StudentsDirectory extends Component {
   	      	  <th style={borderStyle}>{student.name}</th>
   	      	  <th style={borderStyle}>{student.gpa}</th>
   	      	  <th style={borderStyle}>{student.extracurricular || 'None'}</th>
-  	      	  <th style={borderStyle}>{student.img}</th>
   	      	  <th style={borderStyle}><button name={student.id} onClick={handleClick}>See Profile</button></th>
   	      	</tr>
   	      )
@@ -82,7 +84,8 @@ const mapDispatchToProps = (dispatch) => ({
   _fetchStudents: () => dispatch(_fetchStudents()),
   clear: () => dispatch(clear()),
   reset: () => dispatch(reset()),
-  _fetchProfile: (id) => dispatch(_fetchProfile(id))
+  _fetchStuProfile: (id) => dispatch(_fetchStuProfile(id)),
+  profileType: (prof) => dispatch(profileType(prof))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentsDirectory)

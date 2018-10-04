@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { writeName,
-		 writeAddress, 
-	     writeDes,
-	     flipSubmitted,
-	     _createSchool,
-	     reset } from '../store/create'
+		     writeAddress, 
+	       writeDes,
+	       flipSubmitted,
+	       _createSchool,
+	       reset } from '../store/create'
 
 class SchoolCreate extends Component {
 
@@ -24,9 +24,9 @@ constructor(){
 
   handleSubmit(e){
   	e.preventDefault()
-  	const { create, name, address, description, _createSchool, flipSubmitted } = this.props
+  	const { create, name, address, description, _createSchool, flipSubmitted, submitted } = this.props
   	_createSchool( create, {name, address, description})
-  	.then(()=>flipSubmitted());
+  	.then(()=>flipSubmitted())
   }
 
   componentWillUnmount(){
@@ -64,12 +64,13 @@ constructor(){
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { name, create, address, description } = state.creating
+  const { name, create, address, description, submitted } = state.creating
   return { 
   	name: name,
   	create: create,
   	address: address,
-  	description: description
+  	description: description,
+    submitted: submitted
   }
 }
 

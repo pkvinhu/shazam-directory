@@ -10,6 +10,7 @@ export const initialState = {
 // ACTION TYPES
 const GET_STUDENTS = 'GET_STUDENTS'
 const PROFILE_VIEW = 'PROFILE_VIEW'
+const CLEAR = 'CLEAR'
 
 
 // ACTION CREATORS
@@ -23,6 +24,10 @@ export const profileView = (student) => ({
   student
 })
 
+export const clearCurrentStu = () => ({
+  type: CLEAR
+})
+
 // THUNK CREATORS
 export const _fetchStudents = () => async dispatch => {
   const response = await axios.get('/api/shazam/students')
@@ -30,11 +35,9 @@ export const _fetchStudents = () => async dispatch => {
   dispatch(getStudents(students))
 }
 
-export const _fetchProfile = (id) => async dispatch => {
-  console.log('This too', id)
+export const _fetchStuProfile = (id) => async dispatch => {
   const response = await axios.get(`/api/shazam/students/${id}`)
   const student = response.data
-  console.log('This is the student', student)
   const action = profileView(student)
   dispatch(action)
 }
@@ -53,6 +56,13 @@ const students = (state = initialState, action) => {
   	  	...state,
   	  	profile: !state.profile,
   	  	currentStudent: action.student
+  	  }
+
+  	case CLEAR:
+  	  return {
+  	  	...state,
+  	  	profile: false,
+  	  	currentStudent: {}
   	  }
     
   	default:

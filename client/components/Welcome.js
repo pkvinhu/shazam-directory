@@ -19,6 +19,7 @@ export default class Welcome extends Component {
 
   resetNav(){
     this.setState({ navigation: '' })
+    console.log('I am happening', this.state.navigation)
   }
 
   render() {
