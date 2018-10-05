@@ -61,10 +61,10 @@ class StudentsDirectory extends Component {
   	    {students.map((student, idx) => {
   	      return(
   	      	<tr style={borderStyle}>
-  	      	  <th style={borderStyle}>{student.name}</th>
-  	      	  <th style={borderStyle}>{student.gpa}</th>
-  	      	  <th style={borderStyle}>{student.extracurricular || 'None'}</th>
-  	      	  <th style={borderStyle}><button name={student.id} onClick={handleClick}>See Profile</button></th>
+  	      	  <th key={student.id} style={borderStyle}>{student.name}</th>
+  	      	  <th key={student.id} style={borderStyle}>{student.gpa}</th>
+  	      	  <th key={student.id} style={borderStyle}>{student.extracurricular || 'None'}</th>
+  	      	  <th key={student.id} style={borderStyle}><button name={student.id} onClick={handleClick}>See Profile</button></th>
   	      	</tr>
   	      )
   	    })}

@@ -42,17 +42,16 @@ class StudentBody extends Component {
 
   render() {
   	const { data, borderStyle } = this.props;
-  	console.log('This is data', data)
   	const categories = [ 'First Name', 'GPA', 'Extracurriculars' ]
   	return (
   	  <tbody>
-  	    {categories.map(c => (<th>{c}</th>))}
+  	    {categories.map((c, idx) => (<th key={idx}>{c}</th>))}
   	    {data.map((each, idx) => {
   	    return(
   	      	<tr style={borderStyle}>
-  	      	  <th style={borderStyle}>{each.name}</th>
-  	      	  <th style={borderStyle}>{each.gpa}</th>
-  	      	  <th style={borderStyle}>{each.extracurricular || 'None'}</th>
+  	      	  <th key={each.id} style={borderStyle}>{each.name}</th>
+  	      	  <th key={each.id} style={borderStyle}>{each.gpa}</th>
+  	      	  <th key={each.id} style={borderStyle}>{each.extracurricular || 'None'}</th>
   	      	</tr>
   	      )
   	    })}
@@ -68,12 +67,12 @@ class TeacherBody extends Component {
   	const categories = [ 'Name', 'Subjects']
   	return (
   	  <tbody>
-  	    {categories.map(c => (<th>{c}</th>))}
+  	    {categories.map((c, idx )=> (<th key={idx}>{c}</th>))}
   	    {data.map((each, idx) => {
   	    return(
   	      	<tr style={borderStyle}>
-  	      	  <th style={borderStyle}>{each.name}</th>
-  	      	  <th style={borderStyle}>{each.subjects.join(', ') || 'None'}</th>
+  	      	  <th key={each.id} style={borderStyle}>{each.name}</th>
+  	      	  <th key={each.id} style={borderStyle}>{each.subjects || 'None'}</th>
   	      	</tr>
   	      )
   	    })}
@@ -89,12 +88,12 @@ class SchoolBody extends Component {
   	const categories = [ 'Name', 'Address']
   	return (
   	  <tbody>
-  	    {categories.map(cat => (<th>{cat}</th>))}
+  	    {categories.map((cat, idx) => (<th key={idx}>{cat}</th>))}
   	    {data.map(each => {
   	    return(
   	      	<tr style={borderStyle}>
-  	      	  <th style={borderStyle}>{each.name}</th>
-  	      	  <th style={borderStyle}>{each.address}</th>
+  	      	  <th key={each.id} style={borderStyle}>{each.name}</th>
+  	      	  <th key={each.id} style={borderStyle}>{each.address}</th>
   	      	</tr>
   	      )
   	    })}

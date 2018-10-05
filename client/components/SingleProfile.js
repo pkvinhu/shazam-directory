@@ -8,30 +8,30 @@ import { resetProfile } from '../store/profile'
 class SingleProfile extends Component {
 
   componentWillUnmount(){
-  	const { clearCurrentStu, clearCurrentT, clearCurrentSch, profile, resetProfile } = this.props;
-  	if(profile === 'students' ) {clearCurrentStu()}
-  	else if (profile === 'teachers') {clearCurrentT()}
-  	else if (profile === 'schools') {clearCurrentSch()}
+  	const { clearCurrentStu, clearCurrentT, clearCurrentSch, prof, resetProfile } = this.props;
+  	if(prof === 'students' ) {clearCurrentStu()}
+  	else if (prof === 'teachers') {clearCurrentT()}
+  	else if (prof === 'schools') {clearCurrentSch()}
   	resetProfile();
   }
 
   render() {
-  	const { profile, student, teacher, school } = this.props;
+  	const { prof, student, teacher, school } = this.props;
 
   	const stylez = { display: 'flex', 
   	  				flexDirection: 'column', 
-  	  				width: '350px', 
+  	  				width: '500px', 
   	  				border: '2px solid black',
   	  				padding: '20px' }
   	return (
   	<div style={{ display:'flex', justifyContent: 'center' }}>
-  	{profile === 'students' &&
+  	{prof === 'students' &&
   	<StudentProfile stylez={stylez} theStudent={student}/>
   	}  	
-  	{profile === 'teachers' &&
+  	{prof === 'teachers' &&
   	<TeacherProfile stylez={stylez} theTeacher={teacher}/>
   	}  
-  	{profile === 'schools' &&
+  	{prof === 'schools' &&
   	<SchoolProfile stylez={stylez} theSchool={school}/>
   	}  
   	</div>
@@ -47,7 +47,7 @@ class StudentProfile extends Component {
   	return (
   	  <div>
 	  	<div style={stylez}>
-	  	  <div>{theStudent.img}</div>
+	  	  <img src={theStudent.img} />
 	  	  <h1>{theStudent.name}</h1>
 	  	  <h3>GPA:</h3>
 	  	  <label>{theStudent.gpa}</label>
@@ -70,7 +70,7 @@ class TeacherProfile extends Component {
   	return (
   	  <div>
 	  	<div style={stylez}>
-	  	  <div>{theTeacher.img}</div>
+	  	  <img src={theTeacher.img} />
 	  	  <h1>{theTeacher.name}</h1>
 	      <h3>Subjects:</h3>
 	  	  <label>{theTeacher.subjects}</label>
@@ -91,7 +91,7 @@ class SchoolProfile extends Component {
   	return (
   	  <div>
 	  	<div style={stylez}>
-	  	  <div>{theSchool.img}</div>
+	  	  <img src={theSchool.img} />
 	  	  <h1>{theSchool.name}</h1>
 	  	  <h3>Address:</h3>
 	  	  <label>{theSchool.address}</label>
@@ -111,7 +111,7 @@ const mapStateToProps = state => {
   	student: state.students.currentStudent,
   	teacher: state.teachers.currentTeacher,
   	school: state.schools.currentSchool,
-  	profile: state.profile.profile
+  	prof: state.profile.prof
   }
 }
 

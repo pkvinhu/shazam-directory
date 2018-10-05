@@ -51,7 +51,7 @@ const School = conn.define('school', {
   },
   img: {
     type: Sequelize.STRING,
-    defaultValue: 'https://loremflickr.com/320/240'
+    defaultValue: faker.image.nature()
   },
   description: {
     type: Sequelize.TEXT,
@@ -80,6 +80,11 @@ const Teacher = conn.define('teacher', {
   },
   subjects: {
     type: Sequelize.ARRAY(Sequelize.STRING),
+    get(){
+      if(this.getDataValue('subjects') !== null) {
+        return this.getDataValue('subjects').join(', ')
+      }
+    }
     // defaultValue: faker.random.words()
   },
   admin: {

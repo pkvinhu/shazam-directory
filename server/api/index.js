@@ -44,7 +44,6 @@ router.get('/schools', (req, res, next) => {
 router.get('/students/:id', (req, res, next) => {
   Student.findById(req.params.id)
   .then(student => {
-    console.log(student)
     if(!student) res.sendStatus(404)
   	else res.send(student)
   })
@@ -72,7 +71,6 @@ router.get('/schools/:id', (req, res, next) => {
 // GET BY :NAME
 router.post('/search/:filter', (req, res, next) => {
   const Op = Sequelize.Op;
-  console.log(req.body)
   if(req.params.filter === 'students') {
   Student.findAll({
     where: {
@@ -115,25 +113,66 @@ router.post('/search/:filter', (req, res, next) => {
 })
 
 //CREATE
-router.post('/students/create', (req, res, next) => {
-  Student.create(req.body)
-  .then(student => {
-    console.log(student)
+router.post('/students/create', async (req, res, next) => {
+  try {
+    const student = await Student.create(req.body)
+    if(req.body.school) {
+      const school = await School.findById(req.body.school.id)
+      student.setSchool(school)
+    }
     res.send(student)
-  })
-  .catch(next)
+  }
+  catch(err) {next(err)}
 })
 
-router.post('/teachers/create', (req, res, next) => {
-  Teacher.create(req.body)
-  .then(teacher => res.send(teacher))
-  .catch(next)
+router.post('/teachers/create', async (req, res, next) => {
+  try {
+    const teacher = await Teacher.create(req.body)
+    if(req.body.school) {
+      const school = await School.findById(req.body.school.id)
+      teacher.setSchool(school)
+    }
+    res.send(teacher)
+  }
+  catch(err) {next(err)}
 })
 
 router.post('/schools/create', (req, res, next) => {
   School.create(req.body)
   .then(school => res.send(school))
   .catch(next)
+})
+
+// EDIT
+router.put('/edit/:filter/:id', (req, res, next) => {
+  const id = req.params.id;
+
+  if(req.params.filter === 'students'){
+    Student.findById(id)
+    .then(student => {
+      student.update(req.body)
+      .then(updated => res.send(updated))
+      .catch(next)
+    })
+  }
+
+  if(req.params.filter === 'teachers'){
+    Teacher.findById(id)
+    .then(teacher => {
+      teacher.update(req.body)
+      .then(updated => res.send(updated))
+      .catch(next)
+    })
+  }
+
+  if(req.params.filter === 'schools'){
+    School.findById(id)
+    .then(school => {
+      school.update(req.body)
+      .then(updated => res.send(updated))
+      .catch(next)
+    })
+  }
 })
 
 //DELETE

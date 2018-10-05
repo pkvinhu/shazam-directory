@@ -28,7 +28,8 @@ export default class HomePage extends Component {
   	      <Route path='/welcome' component={Welcome} />
           <Route exact path='/search' component={SearchForm} />
           <Route path='/search/:filter' component={SearchInformation} />
-          <Route path='/create' component={CreateForm} />       
+          <Route path='/create' component={CreateForm} />
+          <Route path='/edit/:filter/:id' component={CreateForm} />       
   	      <Route exact path='/students' component={StudentsDirectory} />
   	      <Route exact path='/teachers' component={TeachersDirectory}/>
   	      <Route exact path='/schools' component={SchoolsDirectory}/>
