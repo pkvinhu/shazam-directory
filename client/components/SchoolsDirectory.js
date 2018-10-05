@@ -53,10 +53,10 @@ class SchoolsDirectory extends Component {
   	    </tr>
   	    {schools.map((school, idx) => {
   	      return(
-  	      	<tr style={borderStyle}>
-  	      	  <th key={school.id} style={borderStyle}>{school.name}</th>
-  	      	  <th key={school.id} style={borderStyle}>{school.address}</th>
-              <th key={school.id} style={borderStyle}><button name={school.id} onClick={handleClick}>See Profile</button></th>
+  	      	<tr key={school.id} style={borderStyle}>
+  	      	  <th style={borderStyle}>{school.name}</th>
+  	      	  <th style={borderStyle}>{school.address}</th>
+              <th style={borderStyle}><button name={school.id} onClick={handleClick}>See Profile</button></th>
   	      	</tr>
   	      )
   	    })}

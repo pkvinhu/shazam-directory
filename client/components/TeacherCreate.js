@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { _fetchTProfile } from '../store/teachers'
 import { writeName, 
 	     writeGender, 
 	     writeSubjects,
+       writeEmployment,
+       flipSubmitted,
 	     _createTeacher,
-	     flipSubmitted,
 	     reset } from '../store/create'
+import { _fetchSchools } from '../store/schools'
+import { _editTeacher, resetEditing } from '../store/profile'
 
 class TeacherCreate extends Component {
 constructor(){
@@ -15,18 +20,46 @@ constructor(){
   }
 
   handleChange(e){
-  	const { writeName, writeGender, writeSubjects } = this.props;
+  	const { writeName, writeGender, writeSubjects, writeEmployment } = this.props;
   	if (e.target.name === 'name') {writeName(e.target.value)}
   	else if (e.target.name === 'gender') {writeGender(e.target.value)}
   	else if (e.target.name === 'subjects') {writeSubjects(e.target.value)}
+    else if (e.target.name === 'schools') {writeEmployment(e.target.value)}
   }
 
   handleSubmit(e){
   	e.preventDefault()
-  	const { create, name, gender, subjects, _createTeacher, flipSubmitted, submitted } = this.props
-  	_createTeacher( create, {name, gender, subjects})
-  	.then(()=>flipSubmitted())
+  	const { create, 
+            name, 
+            gender, 
+            subjects, 
+            _createTeacher, 
+            flipSubmitted,
+            resetEditing, 
+            employment,
+            editing,
+            _editTeacher,
+            teacher,
+            _fetchTProfile } = this.props
+
+    if(editing){
+      const id = teacher.id;
+      _editTeacher({name, gender, subjects, employment, id})
+      .then(()=>{
+        _fetchTProfile(id)
+        flipSubmitted()
+        resetEditing()
+      })
+    }
+    else{
+  	  _createTeacher( create, {name, gender, subjects, employment})
+  	  .then(()=>flipSubmitted())
+    }
   }
+
+  componentDidMount(){
+    this.props._fetchSchools();
+  } 
 
   componentWillUnmount(){
   	this.props.flipSubmitted()
@@ -34,13 +67,20 @@ constructor(){
   }
 
   render() {
-  	const { name, gender, subjects } = this.props;
+  	const { name, gender, subjects, schools, employment, teacher, editing, create } = this.props;
   	const { handleChange, handleSubmit } = this;
-  	return (
+  	
+    if(!editing && !create) {
+      return (<Redirect to={`/teachers/${teacher.id}`} />)
+    }
+    else {
+    return (
   	    <form style={{display: 'flex', 
 	  	             justifyContent: 'center', 
 	  	             flexDirection: 'column',
-	  	             width: '50%' }} onChange={handleChange} onSubmit={handleSubmit}>
+	  	             width: '50%' }} 
+                   onChange={handleChange} 
+                   onSubmit={handleSubmit}>
 	  	  <label>Name</label>
 	  	  <input type='text'
 	  	  		 name='name'
@@ -56,22 +96,38 @@ constructor(){
   	             name='subjects'
   	             value={subjects}
   	             style={{ height: '40px', padding: '5px'}}></input>
+          <label>School</label>
+          <select name='schools'>
+          {schools.map(school => {
+            return (
+              <option value={school.id}>{school.name}</option>
+              )
+          })}
+          </select>
   	      <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
   	      <button style={{ width: '15%' }}>Submit</button>
   	      </div>
 	  	</form>
   	)
   }
+  }
 }
 
 const mapStateToProps = state => {
-  const { create, name, subjects, gender, submitted } = state.creating
+  const { create, name, subjects, gender, submitted, employment } = state.creating
+  const { directory } = state.schools
+  const { editing } = state.profile
+  const { currentTeacher } = state.teachers
   return {
   	create: create,
   	name: name,
   	subjects: subjects,
   	gender: gender,
-    submitted: submitted
+    submitted: submitted,
+    employment: employment,
+    schools: directory,
+    editing: editing,
+    teacher: currentTeacher
   }
 }
 
@@ -79,9 +135,14 @@ const mapDispatchToProps = dispatch => ({
   writeName: (name) => dispatch(writeName(name)),
   writeGender: (gender) => dispatch(writeGender(gender)),
   writeSubjects: (subjects) => dispatch(writeSubjects(subjects)),
+  writeEmployment: (school) => dispatch(writeEmployment(school)),
   flipSubmitted: () => dispatch(flipSubmitted()),
   _createTeacher: (search, input) => dispatch(_createTeacher(search, input)),
-  reset: () => dispatch(reset())
+  reset: () => dispatch(reset()),
+  _fetchSchools: () => dispatch(_fetchSchools()),
+  _editTeacher: input => dispatch(_editTeacher(input)),
+  resetEditing: () => dispatch(resetEditing()),
+  _fetchTProfile: (id) => dispatch(_fetchTProfile(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeacherCreate)

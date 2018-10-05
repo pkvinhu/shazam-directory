@@ -11,6 +11,8 @@ const initialState = {
   address: '',
   teacherGender: '',
   schoolDescription: '',
+  enrollment: '',
+  employment: '',
   submitted: false
 }
 
@@ -23,9 +25,11 @@ const WRITE_EXTRACURRICULAR = 'WRITE_EXTRACURRICULAR'
 
 const WRITE_GENDER = 'WRITE_GENDER'
 const WRITE_SUBJECTS = 'WRITE_SUBJECTS'
+const WRITE_ENROLLMENT = 'WRITE_ENROLLMENT'
 
 const WRITE_ADDRESS = 'WRITE_ADDRESS'
 const WRITE_DESCRIPTION = 'WRITE_DESCRIPTION'
+const WRITE_EMPLOYMENT = 'WRITE_EMPLOYMENT'
 
 const FLIP_SUBMITTED = 'FLIP_SUBMITTED'
 const RESET = 'RESET'
@@ -72,6 +76,16 @@ export const writeDes = description => ({
   description
 })
 
+export const writeEnrollment = school => ({
+  type: WRITE_ENROLLMENT,
+  school
+})
+
+export const writeEmployment = school => ({
+  type: WRITE_EMPLOYMENT,
+  school
+})
+
 export const flipSubmitted = () => ({
   type: FLIP_SUBMITTED
 })
@@ -86,16 +100,20 @@ export const _createStudent = (create, input) => async dispatch => {
   const name = input.name;
   const gpa = input.gpa*1;
   const extracurricular = input.extracurricular.split(' ');
-  const response = await axios.post('/api/shazam/students/create', { name, gpa, extracurricular })
+  const enrollment = input.enrollment;
+  const response = await axios.post('/api/shazam/students/create', { name, gpa, extracurricular, enrollment })
   const student = response.data;
+  console.log(student)
 }
 
 export const _createTeacher = (create, input) => async dispatch => {
   const name = input.name;
   const gender = input.gender;
   const subjects = input.subjects.split(' ');
-  const response = await axios.post('/api/shazam/teachers/create', { name, gender, subjects })
+  const employment = input.employment;
+  const response = await axios.post('/api/shazam/teachers/create', { name, gender, subjects, employment })
   const teacher = response.data;
+  console.log(teacher)
 }
 
 export const _createSchool = (create, input) => async dispatch => {
@@ -104,7 +122,6 @@ export const _createSchool = (create, input) => async dispatch => {
   const description = input.description || null;
   const response = await axios.post('/api/shazam/schools/create', { name, address, description })
   const school = response.data;
-  console.log('This is the school', school)
 }
 
 
@@ -158,6 +175,20 @@ const creating = (state = initialState, action) => {
   	  return {
   	  	...state,
   	  	description: action.description
+  	  }
+
+  	case WRITE_ENROLLMENT:
+  	console.log(action.school)
+  	  return {
+  	  	...state,
+  	  	enrollment: action.school
+  	  }
+
+  	case WRITE_EMPLOYMENT:
+
+  	  return {
+  	  	...state,
+  	  	employment: action.school
   	  }
 
   	case FLIP_SUBMITTED:

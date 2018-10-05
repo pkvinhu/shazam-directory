@@ -10,12 +10,14 @@ import SearchForm from './SearchForm'
 import SearchInformation from './SearchInformation'
 import CreateForm from './CreateForm'
 import SingleProfile from './SingleProfile'
+import StudentCreate from './StudentCreate'
+import TeacherCreate from './TeacherCreate'
+import SchoolCreate from './SchoolCreate'
 
 
 export default class HomePage extends Component {
 
   render() {
-    // const { submitted, search } = this.props;
   	return (
   	  <div>
   	   <header style={{ backgroundColor: '#ff9933', display: 'flex', justifyContent: 'center' }}>
@@ -29,8 +31,10 @@ export default class HomePage extends Component {
           <Route exact path='/search' component={SearchForm} />
           <Route path='/search/:filter' component={SearchInformation} />
           <Route path='/create' component={CreateForm} />
-          <Route path='/edit/:filter/:id' component={CreateForm} />       
-  	      <Route exact path='/students' component={StudentsDirectory} />
+          <Route path='/edit/students/:id' component={StudentCreate} />
+          <Route path='/edit/teachers/:id' component={TeacherCreate} />        
+          <Route path='/edit/schools/:id' component={SchoolCreate} />   	      
+          <Route exact path='/students' component={StudentsDirectory} />
   	      <Route exact path='/teachers' component={TeachersDirectory}/>
   	      <Route exact path='/schools' component={SchoolsDirectory}/>
   	      <Route exact path='/students/:id' component={SingleProfile} />

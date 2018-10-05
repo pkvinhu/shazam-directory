@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { _fetchSchProfile } from '../store/schools'
 import { writeName,
 		     writeAddress, 
 	       writeDes,
 	       flipSubmitted,
 	       _createSchool,
 	       reset } from '../store/create'
+import { _editSchool, resetEditing } from '../store/profile'
 
 class SchoolCreate extends Component {
 
@@ -24,9 +27,32 @@ constructor(){
 
   handleSubmit(e){
   	e.preventDefault()
-  	const { create, name, address, description, _createSchool, flipSubmitted, submitted } = this.props
-  	_createSchool( create, {name, address, description})
-  	.then(()=>flipSubmitted())
+  	const { create, 
+            name, 
+            address, 
+            description, 
+            _createSchool, 
+            flipSubmitted,
+            resetEditing, 
+            submitted,
+            editing,
+            _editSchool,
+            school,
+            _fetchSchProfile } = this.props
+
+    if(editing){
+      const id = school.id
+      _editSchool({name, address, description, id})
+      .then(()=> {
+        _fetchSchProfile(id)
+        flipSubmitted()
+        resetEditing()
+      })
+    } 
+    else{
+  	  _createSchool( create, {name, address, description})
+  	  .then(()=>flipSubmitted())
+    }
   }
 
   componentWillUnmount(){
@@ -35,13 +61,20 @@ constructor(){
   }
 
   render() {
-  	const { name, address, description } = this.props;
+  	const { name, address, description, school, editing, create } = this.props;
   	const { handleChange, handleSubmit } = this;
+
+    if(!editing && !create) {
+      return (<Redirect to={`/schools/${school.id}`} />)
+    }
+    else if(editing || create) {
   	return (
   	    <form style={{display: 'flex', 
 	  	             justifyContent: 'center', 
 	  	             flexDirection: 'column',
-	  	             width: '50%' }} onChange={handleChange} onSubmit={handleSubmit}>
+	  	             width: '50%' }} 
+                   onChange={handleChange} 
+                   onSubmit={handleSubmit}>
 	  	  <label>Name</label>
 	  	  <input type='text'
 	  	  		 name='name'
@@ -61,16 +94,21 @@ constructor(){
 	  	</form>
   	)
   }
+  }
 }
 
 const mapStateToProps = (state, ownProps) => {
   const { name, create, address, description, submitted } = state.creating
+  const { editing } = state.profile
+  const { currentSchool } = state.schools
   return { 
   	name: name,
   	create: create,
   	address: address,
   	description: description,
-    submitted: submitted
+    submitted: submitted,
+    editing: editing,
+    school: currentSchool
   }
 }
 
@@ -80,7 +118,10 @@ const mapDispatchToProps = dispatch => ({
   writeDes: (description) => dispatch(writeDes(description)),
   flipSubmitted: () => dispatch(flipSubmitted()),
   _createSchool: (search, input) => dispatch(_createSchool(search, input)),
-  reset: () => dispatch(reset())
+  reset: () => dispatch(reset()),
+  _editSchool: (input) => dispatch(_editSchool(input)),
+  resetEditing: () => dispatch(resetEditing()),
+    _fetchSchProfile: (id) => dispatch(_fetchSchProfile(id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SchoolCreate);

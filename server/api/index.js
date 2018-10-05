@@ -9,7 +9,10 @@ router.get('/students', (req, res, next) => {
   	include: [{
   	  model: Teacher,
   	  as: 'Teacher'
-  	}]
+  	},
+    {
+      model: School
+    }]
   })
   .then(students => res.send(students))
   .catch(next)
@@ -20,7 +23,10 @@ router.get('/teachers', (req, res, next) => {
   	include: [{
   	  model: Student,
   	  as: 'Student'
-  	}]
+  	},
+    {
+      model: School
+    }]
   })
   .then(teachers => res.send(teachers))
   .catch(next)
@@ -42,7 +48,18 @@ router.get('/schools', (req, res, next) => {
 
 //GET BY :ID
 router.get('/students/:id', (req, res, next) => {
-  Student.findById(req.params.id)
+  Student.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: [{
+      model: Teacher,
+      as: 'Teacher'
+    },
+    {
+      model: School
+    }]
+  })
   .then(student => {
     if(!student) res.sendStatus(404)
   	else res.send(student)
@@ -51,7 +68,18 @@ router.get('/students/:id', (req, res, next) => {
 })
 
 router.get('/teachers/:id', (req, res, next) => {
-  Teacher.findById(req.params.id)
+  Teacher.findOne({
+    where: {
+      id: req.params.id
+    },
+    include: [{
+      model: Student,
+      as: 'Student'
+    },
+    {
+      model: School
+    }]
+  })
   .then(teacher => {
     if(!teacher) res.sendStatus(404)
   	else res.send(teacher)  	
@@ -116,8 +144,8 @@ router.post('/search/:filter', (req, res, next) => {
 router.post('/students/create', async (req, res, next) => {
   try {
     const student = await Student.create(req.body)
-    if(req.body.school) {
-      const school = await School.findById(req.body.school.id)
+    if(req.body.enrollment) {
+      const school = await School.findById(req.body.enrollment)
       student.setSchool(school)
     }
     res.send(student)
@@ -128,8 +156,8 @@ router.post('/students/create', async (req, res, next) => {
 router.post('/teachers/create', async (req, res, next) => {
   try {
     const teacher = await Teacher.create(req.body)
-    if(req.body.school) {
-      const school = await School.findById(req.body.school.id)
+    if(req.body.employment) {
+      const school = await School.findById(req.body.employment)
       teacher.setSchool(school)
     }
     res.send(teacher)
@@ -144,34 +172,50 @@ router.post('/schools/create', (req, res, next) => {
 })
 
 // EDIT
-router.put('/edit/:filter/:id', (req, res, next) => {
+router.put('/edit/:filter/:id', async (req, res, next) => {
   const id = req.params.id;
 
   if(req.params.filter === 'students'){
-    Student.findById(id)
-    .then(student => {
-      student.update(req.body)
-      .then(updated => res.send(updated))
-      .catch(next)
-    })
+    try{
+      const student = await Student.findById(id)
+      const school = await School.findById(req.body.schoolId)
+      const updated = await student.update({
+                              name: req.body.name,
+                              gpa: req.body.gpa,
+                              extracurricular: req.body.extracurricular
+                            })
+      if(school){await updated.setSchool(school)}
+      res.send(updated)
+    }
+    catch(err){next(err)}
   }
 
   if(req.params.filter === 'teachers'){
-    Teacher.findById(id)
-    .then(teacher => {
-      teacher.update(req.body)
-      .then(updated => res.send(updated))
-      .catch(next)
-    })
+    try{
+      const teacher = await Teacher.findById(id)
+      const school = await School.findById(req.body.schoolId)
+      const updated = await teacher.update({
+                              name: req.body.name,
+                              gender: req.body.gender,
+                              subjects: req.body.subjects
+                            })
+      if(school){await updated.setSchool(school)}
+      res.send(updated)
+    }
+    catch(err){next(err)}
   }
 
   if(req.params.filter === 'schools'){
-    School.findById(id)
-    .then(school => {
-      school.update(req.body)
-      .then(updated => res.send(updated))
-      .catch(next)
-    })
+    try{
+      const school = await School.findById(id)
+      const updated = await school.update({
+                              name: req.body.name,
+                              address: req.body.address,
+                              description: req.body.description
+                            })
+      res.send(updated)
+    }
+    catch(err){next(err)}
   }
 })
 

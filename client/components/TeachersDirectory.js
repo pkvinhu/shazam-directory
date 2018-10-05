@@ -53,10 +53,10 @@ class TeachersDirectory extends Component {
   	    </tr>
   	    {teachers.map((teacher, idx) => {
   	      return(
-  	      	<tr style={borderStyle}>
-  	      	  <th key={teacher.id} style={borderStyle}>{teacher.name}</th>
-  	      	  <th key={teacher.id} style={borderStyle}>{teacher.subjects || 'None'}</th>
-              <th key={teacher.id} style={borderStyle}><button name={teacher.id} onClick={handleClick}>See Profile</button></th>
+  	      	<tr key={teacher.id} style={borderStyle}>
+  	      	  <th style={borderStyle}>{teacher.name}</th>
+  	      	  <th style={borderStyle}>{teacher.subjects || 'None'}</th>
+              <th style={borderStyle}><button name={teacher.id} onClick={handleClick}>See Profile</button></th>
   	      	</tr>
   	      )
   	    })}
