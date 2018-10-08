@@ -5,6 +5,7 @@ import { profileType } from '../store/profile'
 import { clear } from '../store/search'
 import { reset } from '../store/create'
 import { Link, Redirect } from 'react-router-dom'
+import { Table, TableBody, TableHead, TableRow, TableCell, Paper } from '@material-ui/core'
 
 class StudentsDirectory extends Component {
   constructor() {
@@ -26,17 +27,11 @@ class StudentsDirectory extends Component {
   	reset()
   }
 
-  // componentWillUnmount(){
-  // 	const { clear, reset } = this.props;
-  // 	clear()
-  // 	reset()
-  // }
-
   render() {
   	const { students, profile, currentStudent } = this.props;
   	const { handleClick } = this;
 
-  	const categories = [ 'First Name', 'GPA', 'Exracurriculars', 'Profile Picture', ''];
+  	const categories = [ 'First Name', 'GPA', 'Exracurriculars', ''];
 
   	const borderStyle = { 
       border: '1px solid black', 
@@ -48,29 +43,31 @@ class StudentsDirectory extends Component {
     } 
     else if(!profile) {
   	return (
-  	  <div style={{ display: 'flex', justifyContent: 'center' }}>
-  	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '70%' }}>
-  	    <tbody >
-  	    <tr style={borderStyle}>
+
+      <Paper style={{ display: 'flex', justifyContent: 'center', padding: '35px' }}>
+  	    <Table style={{ width: '60%' }}>
+  	    <TableBody >
+  	    <TableRow >
   	      {categories.map((category, idx) => {
   	      	return (
-  	      		<th key={idx}>{category}</th>
+  	      		<TableCell style={{fontStyle: 'bold'}} key={idx}>{category}</TableCell>
   	      	)}
   	      	)}
-  	    </tr>
+  	    </TableRow>
   	    {students.map((student, idx) => {
   	      return(
-  	      	<tr key={student.id} style={borderStyle}>
-  	      	  <th style={borderStyle}>{student.name}</th>
-  	      	  <th style={borderStyle}>{student.gpa}</th>
-  	      	  <th style={borderStyle}>{student.extracurricular || 'None'}</th>
-  	      	  <th style={borderStyle}><button name={student.id} onClick={handleClick}>See Profile</button></th>
-  	      	</tr>
+  	      	<TableRow key={student.id} >
+  	      	  <TableCell >{student.name}</TableCell>
+  	      	  <TableCell >{student.gpa}</TableCell>
+  	      	  <TableCell >{student.extracurricular || 'None'}</TableCell>
+  	      	  <TableCell ><button name={student.id} onClick={handleClick}>See Profile</button></TableCell>
+  	      	</TableRow>
   	      )
   	    })}
-  	    </tbody>
-  	    </table>
-  	  </div>
+  	    </TableBody>
+  	    </Table>
+        </Paper>
+
   	)
     }
   }

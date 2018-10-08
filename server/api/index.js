@@ -14,7 +14,9 @@ router.get('/students', (req, res, next) => {
       model: School
     }]
   })
-  .then(students => res.send(students))
+  .then(students => {
+    res.send(students)
+  })
   .catch(next)
 })
 

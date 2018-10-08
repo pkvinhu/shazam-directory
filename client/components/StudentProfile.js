@@ -1,17 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { editingProfile } from '../store/profile'
+import { editingProfile, profileType, resetProfile } from '../store/profile'
 import { writeName, 
 	     writeGPA, 
 	     writeExtra,
-         writeEnrollment,
+       writeEnrollment,
 	     flipSubmitted } from '../store/create'
+import { Card, CardMedia, CardContent, Typography, Paper } from '@material-ui/core'
 
 class StudentProfile extends Component {
   constructor(){
   	super()
   	this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentDidMount(){
+    this.props.profileType('students')
+  }
+
+  componentWillUnMount(){
+    this.props.resetProfile();
   }
 
   handleClick(e){
@@ -36,20 +45,39 @@ class StudentProfile extends Component {
   		return (<Redirect to={`/edit/${prof}/${student.id}`}/>)
   	} else {
   	return (
-  	  <div>
-	  	<div style={stylez}>
-	  	  <img src={student.img} />
-	  	  <h1>{student.name}</h1>
-	  	  <h3>GPA:</h3>
-	  	  <label>{student.gpa}</label>
-	  	  <h3>Extracurricular:</h3>
-	  	  <label>{student.extracurricular || 'None' }</label>
-	  	  <h3>School:</h3>
+  	  <div style={{ width: '55%', padding: '50px'}}>
+	  	<Card style={{ padding: '20px'}}>
+      <CardMedia 
+      image={student.img}
+      style={{ height:'300px'}}>
+      </CardMedia>
+	  	  <CardContent>
+	  	  <Typography variant='display1' centered>
+          {student.name}
+        </Typography>
+        <br />
+	  	  <Typography variant='title' centered>
+          GPA:
+        </Typography>
+	  	  <Typography variant='body1' centered>
+          {student.gpa}
+        </Typography>
+        <br />
+	  	  <Typography variant='title' centered>
+          Extracurricular:
+        </Typography>
+	  	  <Typography variant='body1' centered>
+          {student.extracurricular || 'None' }
+        </Typography>
+        <br />
+	  	  <Typography variant='title' centered>
+          School:
+        </Typography>
 	  	  {!student.school ?
-	  	  <label>None</label> :
-	  	  <label>{student.school.name}</label>
-	  	}
-	  	</div>
+	  	  <Typography variant='body1' centered>None</Typography> :
+	  	  <Typography variant='body1' centered>{student.school.name}</Typography>}
+      </CardContent>
+	  	</Card>
 	  	<div style={{ display:'flex', flexDirection: 'row-reverse'}}>
 	  	  <button onClick={handleClick}>EDIT</button>
 	  	</div>
@@ -71,6 +99,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   editingProfile: (info) => dispatch(editingProfile(info)),
+  profileType: (t) => dispatch(profileType(t)),
+  resetProfile: () => dispatch(resetProfile()),
   writeName: (name) => dispatch(writeName(name)),
   writeGPA: (gpa) => dispatch(writeGPA(gpa)),
   writeExtra: (ex) => dispatch(writeExtra(ex)),

@@ -54,7 +54,7 @@ const students = (state = initialState, action) => {
   	case PROFILE_VIEW:
   	  return {
   	  	...state,
-  	  	profile: !state.profile,
+  	  	profile: true,
   	  	currentStudent: action.student
   	  }
 

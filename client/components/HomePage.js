@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import NavBar from './NavBar'
 import Welcome from './Welcome'
@@ -13,19 +13,48 @@ import SingleProfile from './SingleProfile'
 import StudentCreate from './StudentCreate'
 import TeacherCreate from './TeacherCreate'
 import SchoolCreate from './SchoolCreate'
+import { AppBar, Paper, Toolbar, Tabs, Tab, Typography } from '@material-ui/core'
+import orange from '@material-ui/core/colors/orange'
 
 
 export default class HomePage extends Component {
+  constructor() {
+    super();
+    this.state = {
+      value: 0,
+      anchorEl: null
+    }
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(evt, value) {
+    this.setState({ value })
+  }
 
   render() {
   	return (
-  	  <div>
-  	   <header style={{ backgroundColor: '#ff9933', display: 'flex', justifyContent: 'center' }}>
-  	    <h1>SHAZAM</h1>
-  	   </header>
-  	    <hr />
-  	    <NavBar />
-  	    <hr />
+  	  <Paper >
+  	   <AppBar style={{ padding: '15px', display:'inline-flex' }} position='static' color='primary'>
+  	    <Typography variant='display2' color='inherit' display='flex'>
+          SHAZAM
+        </Typography>
+        </AppBar>
+          <Paper>
+          <Tabs
+              style={{ flexGrow: 5 }}
+              value={this.state.value}
+              onChange={this.handleChange}
+              textColor="inherit"
+              indicatorColor='secondary'
+              centered
+              >
+            <Tab component={Link} to='/welcome' label='Welcome'></Tab>
+            <Tab component={Link} to='/students' label='Students'></Tab>
+            <Tab component={Link} to='/schools' label='Schools'></Tab>
+            <Tab component={Link} to='/teachers' label='Teachers'></Tab>
+          </Tabs>
+          </Paper>
+
   	    <div>
   	      <Route path='/welcome' component={Welcome} />
           <Route exact path='/search' component={SearchForm} />
@@ -41,7 +70,7 @@ export default class HomePage extends Component {
   	      <Route exact path='/teachers/:id' component={SingleProfile}/>
   	      <Route exact path='/schools/:id' component={SingleProfile}/>
   	    </div>
-  	  </div>
+  	  </Paper>
   	)
   }
 }

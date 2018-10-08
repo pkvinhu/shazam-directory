@@ -5,6 +5,7 @@ import { profileType } from '../store/profile'
 import { clear } from '../store/search'
 import { reset } from '../store/create'
 import { Link, Redirect } from 'react-router-dom'
+import { Table, TableBody, TableHead, TableRow, TableCell, Paper, Button } from '@material-ui/core'
 
 class TeachersDirectory extends Component {
   constructor() {
@@ -41,28 +42,28 @@ class TeachersDirectory extends Component {
       return (<Redirect to={`/teachers/${currentTeacher.id}`} />)
     } else if(!profile || currentTeacher === 'undefined') {
   	return (
-  	  <div style={{ display: 'flex', justifyContent: 'center' }}>
-  	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '50%' }}>
-  	    <tbody>
-  	    <tr style={borderStyle}>
+  	 <Paper style={{ display: 'flex', justifyContent: 'center', padding: '35px' }}>
+  	    <Table style={{ width: '60%' }}>
+  	    <TableBody>
+  	    <TableRow >
   	      {categories.map((category, idx) => {
             return (
-              <th key={idx}>{category}</th>
+              <TableCell key={idx}>{category}</TableCell>
             )
             })}
-  	    </tr>
+  	    </TableRow>
   	    {teachers.map((teacher, idx) => {
   	      return(
-  	      	<tr key={teacher.id} style={borderStyle}>
-  	      	  <th style={borderStyle}>{teacher.name}</th>
-  	      	  <th style={borderStyle}>{teacher.subjects || 'None'}</th>
-              <th style={borderStyle}><button name={teacher.id} onClick={handleClick}>See Profile</button></th>
-  	      	</tr>
+  	      	<TableRow key={teacher.id} >
+  	      	  <TableCell >{teacher.name}</TableCell>
+  	      	  <TableCell >{teacher.subjects || 'None'}</TableCell>
+              <TableCell><button name={teacher.id} onClick={handleClick} component={Link} to={`/teachers/${teacher.id}`} color='primary'>Profile</button></TableCell>
+  	      	</TableRow>
   	      )
   	    })}
-  	    </tbody>
-  	    </table>
-  	  </div>
+  	    </TableBody>
+  	    </Table>
+  	  </Paper>
   	)
   }
   }

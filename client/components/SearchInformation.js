@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { flipSubmit, clear } from '../store/search'
+import { Table, TableBody, TableHead, TableRow, TableCell, Paper, Button } from '@material-ui/core'
 
 class SearchInformation extends Component {
   componentWillUnmount(){
@@ -44,18 +45,24 @@ class StudentBody extends Component {
   	const { data, borderStyle } = this.props;
   	const categories = [ 'First Name', 'GPA', 'Extracurriculars' ]
   	return (
-  	  <tbody>
-  	    {categories.map((c, idx) => (<th key={idx}>{c}</th>))}
+  	<Paper style={{ padding: '35px', display: 'flex', justifyContent: 'center'}}>
+  	  <Table>
+  	  <TableBody>
+  	  <TableRow>
+  	    {categories.map((c, idx) => (<TableCell key={idx}>{c}</TableCell>))}
+  	  </TableRow>
   	    {data.map((each, idx) => {
   	    return(
-  	      	<tr style={borderStyle}>
-  	      	  <th key={each.id} style={borderStyle}>{each.name}</th>
-  	      	  <th key={each.id} style={borderStyle}>{each.gpa}</th>
-  	      	  <th key={each.id} style={borderStyle}>{each.extracurricular || 'None'}</th>
-  	      	</tr>
+  	      	<TableRow key={each.id} >
+  	      	  <TableCell >{each.name}</TableCell>
+  	      	  <TableCell >{each.gpa}</TableCell>
+  	      	  <TableCell >{each.extracurricular || 'None'}</TableCell>
+  	      	</TableRow>
   	      )
   	    })}
-  	    </tbody>
+  	    </TableBody>
+  	    </Table>
+  	  </Paper>
   	)
   }
 }
@@ -66,17 +73,23 @@ class TeacherBody extends Component {
   	const { data, borderStyle } = this.props;
   	const categories = [ 'Name', 'Subjects']
   	return (
-  	  <tbody>
-  	    {categories.map((c, idx )=> (<th key={idx}>{c}</th>))}
+  	<Paper style={{ padding: '35px', display: 'flex', justifyContent: 'center'}}>
+  	<Table>
+  	  <TableBody>
+  	  <TableRow>
+  	    {categories.map((c, idx) => (<TableCell key={idx}>{c}</TableCell>))}
+  	  </TableRow>
   	    {data.map((each, idx) => {
   	    return(
-  	      	<tr style={borderStyle}>
-  	      	  <th key={each.id} style={borderStyle}>{each.name}</th>
-  	      	  <th key={each.id} style={borderStyle}>{each.subjects || 'None'}</th>
-  	      	</tr>
+  	      	<TableRow key={each.id} >
+  	      	  <TableCell >{each.name}</TableCell>
+  	      	  <TableCell >{each.subjects || 'None'}</TableCell>
+  	      	</TableRow>
   	      )
   	    })}
-  	  </tbody>
+  	    </TableBody>
+  	    </Table>
+  	  </Paper>
   	)
   }
 }
@@ -87,17 +100,23 @@ class SchoolBody extends Component {
   	const { data, borderStyle } = this.props;
   	const categories = [ 'Name', 'Address']
   	return (
-  	  <tbody>
-  	    {categories.map((cat, idx) => (<th key={idx}>{cat}</th>))}
-  	    {data.map(each => {
+  	<Paper style={{ padding: '35px', display: 'flex', justifyContent: 'center'}}>
+  	  <Table>
+  	  <TableBody>
+  	  <TableRow>
+  	    {categories.map((c, idx) => (<TableCell key={idx}>{c}</TableCell>))}
+  	  </TableRow>
+  	    {data.map((each, idx) => {
   	    return(
-  	      	<tr style={borderStyle}>
-  	      	  <th key={each.id} style={borderStyle}>{each.name}</th>
-  	      	  <th key={each.id} style={borderStyle}>{each.address}</th>
-  	      	</tr>
+  	      	<TableRow key={each.id} >
+  	      	  <TableCell >{each.name}</TableCell>
+  	      	  <TableCell >{each.address}</TableCell>
+  	      	</TableRow>
   	      )
   	    })}
-  	  </tbody>
+  	    </TableBody>
+  	    </Table>
+  	  </Paper>
   	)
   }
 }

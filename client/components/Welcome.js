@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import SelectForm from './SelectForm'
 import CreateForm from './CreateForm'
+import { Typography, Paper } from '@material-ui/core'
 
 export default class Welcome extends Component {
   constructor() {
@@ -28,9 +29,13 @@ export default class Welcome extends Component {
     const { navigation } = this.state;
     console.log(navigation)
   	return(
-  	  <div style={{ margin: '10px 120px 10px 120px' }}>
-  	    <h1>Welcome to School Directory!</h1>
-  	    <p>You have reached our very reputable school directory. Almost every school that is of any relevance is in our database -- so if your school isn't here, it's time to bring your school back to relevance. We used very advanced analytics in screening schools. You can find all information students and teachers have deemed the public privy to as well by easily using our search option! Please see our options below for further navigation.</p>
+      <Paper style={{ margin: '10px 120px 10px 120px', padding: '50px' }}>
+  	    <Typography variant='display2'>
+          Welcome to Our School Directory!
+        </Typography>
+  	    <Typography variant='body1' style={{ padding: '35px' }}>
+        You have reached our very reputable school directory. Almost every school that is of any relevance is in our database -- so if your school isn't here, it's time to bring your school back to relevance. We used very advanced analytics in screening schools. You can find all information students and teachers have deemed the public privy to as well by easily using our search option! Please see our options below for further navigation.
+        </Typography>
   	    <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'column' }}>
   	    {navigation === '' &&
         options.map((option, idx) => {
@@ -48,7 +53,7 @@ export default class Welcome extends Component {
         {navigation !== '' &&
           <SelectForm navigation={navigation} reset={resetNav}/> }
   	    </div>
-  	  </div>
+  	  </Paper>
   	)
   }
 }

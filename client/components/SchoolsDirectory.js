@@ -5,6 +5,7 @@ import { profileType } from '../store/profile'
 import { clear } from '../store/search'
 import { reset } from '../store/create'
 import { Link, Redirect } from 'react-router-dom'
+import { Table, TableBody, TableHead, TableRow, TableCell, Paper } from '@material-ui/core'
 
 class SchoolsDirectory extends Component {
   constructor() {
@@ -41,28 +42,30 @@ class SchoolsDirectory extends Component {
       return (<Redirect to={`/schools/${currentSchool.id}`} />)
     } else {
   	return (
-  	  <div style={{ display: 'flex', justifyContent: 'center' }}>
-  	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '50%' }}>
-  	    <tbody>
-  	    <tr style={borderStyle}>
+
+      <Paper style={{ display: 'flex', justifyContent: 'center', padding: '35px' }}>
+  	    <Table style={{ width: '60%' }}>
+  	    <TableBody>
+  	    <TableRow >
   	      {categories.map((category, idx) => {
             return (
-              <th key={idx}>{category} </th>
+              <TableCell key={idx}>{category} </TableCell>
             )
           })}
-  	    </tr>
+  	    </TableRow>
   	    {schools.map((school, idx) => {
   	      return(
-  	      	<tr key={school.id} style={borderStyle}>
-  	      	  <th style={borderStyle}>{school.name}</th>
-  	      	  <th style={borderStyle}>{school.address}</th>
-              <th style={borderStyle}><button name={school.id} onClick={handleClick}>See Profile</button></th>
-  	      	</tr>
+  	      	<TableRow key={school.id} >
+  	      	  <TableCell >{school.name}</TableCell>
+  	      	  <TableCell >{school.address}</TableCell>
+              <TableCell ><button name={school.id} onClick={handleClick}>See Profile</button></TableCell>
+  	      	</TableRow>
   	      )
   	    })}
-  	    </tbody>
-  	    </table>
-  	  </div>
+  	    </TableBody>
+  	    </Table>
+        </Paper>
+
   	)
   }
   }

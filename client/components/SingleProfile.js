@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { clearCurrentStu } from '../store/students' 
-import { clearCurrentT } from '../store/teachers' 
-import { clearCurrentSch } from '../store/schools'
+import { clearCurrentStu, _fetchStudents } from '../store/students' 
+import { clearCurrentT, _fetchTeachers } from '../store/teachers' 
+import { clearCurrentSch, _fetchSchools } from '../store/schools'
 import { resetProfile } from '../store/profile' 
 import StudentProfile from './StudentProfile'
 import TeacherProfile from './TeacherProfile'
 import SchoolProfile from './SchoolProfile'
 
 class SingleProfile extends Component {
+
+  componentDidMount(){
+  	const { _fetchStudents, _fetchTeachers, _fetchSchools } = this.props;
+  	_fetchStudents();
+  	_fetchTeachers();
+  	_fetchSchools();
+  }
 
   componentWillUnmount(){
   	const { clearCurrentStu, clearCurrentT, clearCurrentSch, prof, resetProfile, editing } = this.props;
@@ -28,13 +35,13 @@ class SingleProfile extends Component {
   	return (
   	<div style={{ display:'flex', justifyContent: 'center' }}>
   	{prof === 'students' &&
-  	<StudentProfile stylez={stylez} theStudent={student}/>
+  	<StudentProfile stylez={stylez} />
   	}  	
   	{prof === 'teachers' &&
-  	<TeacherProfile stylez={stylez} theTeacher={teacher}/>
+  	<TeacherProfile stylez={stylez} />
   	}  
   	{prof === 'schools' &&
-  	<SchoolProfile stylez={stylez} theSchool={school}/>
+  	<SchoolProfile stylez={stylez} />
   	}  
   	</div>
   	)
@@ -55,7 +62,10 @@ const mapDispatchToProps = dispatch => ({
   clearCurrentStu: () => dispatch(clearCurrentStu()),
   clearCurrentT: () => dispatch(clearCurrentT()),
   clearCurrentSch: () => dispatch(clearCurrentSch()),
-  resetProfile: () => dispatch(resetProfile())
+  resetProfile: () => dispatch(resetProfile()),
+  _fetchStudents: () => dispatch(_fetchStudents()),
+  _fetchTeachers: () => dispatch(_fetchTeachers()),
+  _fetchSchools: () => dispatch(_fetchSchools())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProfile)

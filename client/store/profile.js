@@ -72,9 +72,7 @@ const profile = (state = initialState, action) => {
 
   	case RESET_PROFILE:
   	  return {
-  	  	prof: '',
-  	  	editing: false,
-  	  	currentlyEditing: {}
+  	  	prof: ''
   	  }
 
   	case RESET_EDIT:
