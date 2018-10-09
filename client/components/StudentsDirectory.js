@@ -5,7 +5,7 @@ import { profileType } from '../store/profile'
 import { clear } from '../store/search'
 import { reset } from '../store/create'
 import { Link, Redirect } from 'react-router-dom'
-import { Table, TableBody, TableHead, TableRow, TableCell, Paper } from '@material-ui/core'
+import { Table, TableBody, TableHead, TableRow, TableCell, Paper, Button } from '@material-ui/core'
 
 class StudentsDirectory extends Component {
   constructor() {
@@ -13,18 +13,18 @@ class StudentsDirectory extends Component {
   	this.handleClick = this.handleClick.bind(this)
   }
 
-   handleClick(e){
-  	e.preventDefault();
+   handleClick(id){
   	const { profileType, _fetchStuProfile } = this.props;
-  	_fetchStuProfile(e.target.name)
-  	.then(()=>profileType('students'))
+  	_fetchStuProfile(id)
+  	profileType('students')
   }
 
   componentDidMount() {
   	const { _fetchStudents, clear, reset } = this.props;
   	_fetchStudents()
   	clear()
-  	reset()
+    /*
+  	reset()*/
   }
 
   render() {
@@ -38,10 +38,6 @@ class StudentsDirectory extends Component {
       padding: '25px' 
     }
 
-    if(profile) {
-      return (<Redirect to={`/students/${currentStudent.id}`} />)
-    } 
-    else if(!profile) {
   	return (
 
       <Paper style={{ display: 'flex', justifyContent: 'center', padding: '35px' }}>
@@ -60,7 +56,13 @@ class StudentsDirectory extends Component {
   	      	  <TableCell >{student.name}</TableCell>
   	      	  <TableCell >{student.gpa}</TableCell>
   	      	  <TableCell >{student.extracurricular || 'None'}</TableCell>
-  	      	  <TableCell ><button name={student.id} onClick={handleClick}>See Profile</button></TableCell>
+  	      	  <TableCell >
+                <Button onClick={()=>handleClick(student.id)} 
+                        component={Link} 
+                        to={`/students/${student.id}`}>
+                  Profile
+                </Button>
+              </TableCell>
   	      	</TableRow>
   	      )
   	    })}
@@ -69,7 +71,6 @@ class StudentsDirectory extends Component {
         </Paper>
 
   	)
-    }
   }
 }
 

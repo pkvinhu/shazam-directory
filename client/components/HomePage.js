@@ -33,7 +33,7 @@ export default class HomePage extends Component {
 
   render() {
   	return (
-  	  <Paper >
+  	  <div >
   	   <AppBar style={{ padding: '15px', display:'inline-flex' }} position='static' color='primary'>
   	    <Typography variant='display2' color='inherit' display='flex'>
           SHAZAM
@@ -55,7 +55,7 @@ export default class HomePage extends Component {
           </Tabs>
           </Paper>
 
-  	    <div>
+  	    <div style={{ padding: '50px'}}>
   	      <Route path='/welcome' component={Welcome} />
           <Route exact path='/search' component={SearchForm} />
           <Route path='/search/:filter' component={SearchInformation} />
@@ -70,7 +70,7 @@ export default class HomePage extends Component {
   	      <Route exact path='/teachers/:id' component={SingleProfile}/>
   	      <Route exact path='/schools/:id' component={SingleProfile}/>
   	    </div>
-  	  </Paper>
+  	  </div>
   	)
   }
 }

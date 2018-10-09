@@ -13,18 +13,19 @@ class TeachersDirectory extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e){
-    e.preventDefault();
+  handleClick(id){
     const { profileType, _fetchTProfile } = this.props;
-    _fetchTProfile(e.target.name)
-    .then(() => profileType('teachers'))
+    console.log(id)
+    _fetchTProfile(id)
+    profileType('teachers')
   }
 
   componentDidMount() {
     const { _fetchTeachers, clear, reset } = this.props;
     _fetchTeachers()
     clear()
-    reset()
+    /*
+    reset()*/
   }
 
   render() {
@@ -38,9 +39,6 @@ class TeachersDirectory extends Component {
       padding: '25px' 
     }
 
-    if(profile) {
-      return (<Redirect to={`/teachers/${currentTeacher.id}`} />)
-    } else if(!profile || currentTeacher === 'undefined') {
   	return (
   	 <Paper style={{ display: 'flex', justifyContent: 'center', padding: '35px' }}>
   	    <Table style={{ width: '60%' }}>
@@ -57,7 +55,14 @@ class TeachersDirectory extends Component {
   	      	<TableRow key={teacher.id} >
   	      	  <TableCell >{teacher.name}</TableCell>
   	      	  <TableCell >{teacher.subjects || 'None'}</TableCell>
-              <TableCell><button name={teacher.id} onClick={handleClick} component={Link} to={`/teachers/${teacher.id}`} color='primary'>Profile</button></TableCell>
+              <TableCell>
+                <Button onClick={()=>handleClick(teacher.id)}
+                        component={Link}
+                        to={`/teachers/${teacher.id}`}
+                        >
+                  Profile
+                </Button>
+              </TableCell>
   	      	</TableRow>
   	      )
   	    })}
@@ -65,7 +70,6 @@ class TeachersDirectory extends Component {
   	    </Table>
   	  </Paper>
   	)
-  }
   }
 }
 

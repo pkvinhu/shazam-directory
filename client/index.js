@@ -7,12 +7,12 @@ import store from './store'
 import { Paper } from '@material-ui/core'
 
 render(
-	<Paper>
+	<div>
 	<Provider store = { store }>
 		<Router>
 		  <HomePage />
 		</Router>
 	</Provider>
-	</Paper>, 
+	</div>, 
 	document.getElementById('main')
 )

@@ -5,7 +5,7 @@ import { profileType } from '../store/profile'
 import { clear } from '../store/search'
 import { reset } from '../store/create'
 import { Link, Redirect } from 'react-router-dom'
-import { Table, TableBody, TableHead, TableRow, TableCell, Paper } from '@material-ui/core'
+import { Table, TableBody, TableHead, TableRow, TableCell, Paper, Button } from '@material-ui/core'
 
 class SchoolsDirectory extends Component {
   constructor() {
@@ -13,18 +13,18 @@ class SchoolsDirectory extends Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(e){
-    e.preventDefault();
+  handleClick(id){
     const { profileType, _fetchSchProfile } = this.props;
-    _fetchSchProfile(e.target.name)
-    .then(() => profileType('schools'))
+    _fetchSchProfile(id)
+    profileType('schools')
   }
 
   componentDidMount() {
     const { _fetchSchools, clear, reset } = this.props;
     _fetchSchools()
     clear()
-    reset()
+    /*
+    reset()*/
   }
 
   render() {
@@ -38,9 +38,6 @@ class SchoolsDirectory extends Component {
       padding: '25px' 
     }
 
-    if(profile) {
-      return (<Redirect to={`/schools/${currentSchool.id}`} />)
-    } else {
   	return (
 
       <Paper style={{ display: 'flex', justifyContent: 'center', padding: '35px' }}>
@@ -58,7 +55,13 @@ class SchoolsDirectory extends Component {
   	      	<TableRow key={school.id} >
   	      	  <TableCell >{school.name}</TableCell>
   	      	  <TableCell >{school.address}</TableCell>
-              <TableCell ><button name={school.id} onClick={handleClick}>See Profile</button></TableCell>
+              <TableCell >
+                <Button onClick={()=>handleClick(school.id)}
+                        component={Link}
+                        to={`/schools/${school.id}`}>
+                  Profile
+                </Button>
+              </TableCell>
   	      	</TableRow>
   	      )
   	    })}
@@ -67,7 +70,6 @@ class SchoolsDirectory extends Component {
         </Paper>
 
   	)
-  }
   }
 }
 

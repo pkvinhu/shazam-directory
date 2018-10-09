@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { editingProfile, profileType, resetProfile } from '../store/profile'
 import { writeName, 
 	     writeGender, 
 	     writeSubjects,
          writeEmployment,
          flipSubmitted } from '../store/create'
-import { Card, CardMedia, CardContent, Typography, Paper } from '@material-ui/core'
+import { Card, CardMedia, CardContent, Typography, Paper, Button, Icon } from '@material-ui/core'
 
 class TeacherProfile extends Component {
   constructor(){
@@ -41,11 +41,8 @@ class TeacherProfile extends Component {
   	const { teacher, stylez, editing, prof } = this.props;
   	const { handleClick } = this;
 
-  	if(editing) {
-  		return (<Redirect to={`/edit/${prof}/${teacher.id}`} />)
-  	} else {
   	return (
-  	  <div style={{ width: '55%', padding: '50px'}}>
+  	  <div style={{ width: '60%', padding: '50px'}}>
       <Card style={{ padding: '20px'}}>
       <CardMedia 
       image={teacher.img}
@@ -79,11 +76,14 @@ class TeacherProfile extends Component {
       </CardContent>
       </Card>
   	  	<div style={{ display:'flex', flexDirection: 'row-reverse'}}>
-	  	  <button onClick={handleClick}>EDIT</button>
+	  	  <Button onClick={handleClick}
+                component={Link}
+                to={`/edit/${prof}/${teacher.id}`}>
+          <Icon>edit_icon</Icon>
+        </Button>
 	  	</div>
 	  </div>
   	)
-  }
   }
 }
 

@@ -37,6 +37,7 @@ export const _fetchTeachers = () => async dispatch => {
 export const _fetchTProfile = (id) => async dispatch => {
   const response = await axios.get(`/api/shazam/teachers/${id}`)
   const teacher = response.data
+  console.log(teacher)
   const action = profileView(teacher)
   dispatch(action)
 }
@@ -52,6 +53,7 @@ const teachers = (state = initialState, action) => {
   	  }
 
    	case PROFILE_VIEW:
+   	console.log(action.teacher)
   	  return {
   	  	...state,
   	  	profile: !state.profile,

@@ -19,9 +19,9 @@ class SingleProfile extends Component {
 
   componentWillUnmount(){
   	const { clearCurrentStu, clearCurrentT, clearCurrentSch, prof, resetProfile, editing } = this.props;
-  	if(prof === 'students' && !editing ) {clearCurrentStu()}
+  	/*if(prof === 'students' && !editing ) {clearCurrentStu()}
   	else if (prof === 'teachers' && !editing) {clearCurrentT()}
-  	else if (prof === 'schools' && !editing) {clearCurrentSch()}
+  	else if (prof === 'schools' && !editing) {clearCurrentSch()}*/
   }
 
   render() {
