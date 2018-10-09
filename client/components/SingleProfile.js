@@ -7,6 +7,7 @@ import { resetProfile } from '../store/profile'
 import StudentProfile from './StudentProfile'
 import TeacherProfile from './TeacherProfile'
 import SchoolProfile from './SchoolProfile'
+import { CircularProgress } from '@material-ui/core'
 
 class SingleProfile extends Component {
 
@@ -32,17 +33,21 @@ class SingleProfile extends Component {
   	  				width: '500px', 
   	  				border: '2px solid black',
   	  				padding: '20px' }
+
   	return (
   	<div style={{ display:'flex', justifyContent: 'center' }}>
-  	{prof === 'students' &&
-  	<StudentProfile stylez={stylez} />
+  	{(prof === 'students' && student !== undefined) &&
+  	<StudentProfile stylez={stylez} /> 
   	}  	
-  	{prof === 'teachers' &&
-  	<TeacherProfile stylez={stylez} />
+  	{(prof === 'teachers' && teacher !== undefined) &&
+  	<TeacherProfile stylez={stylez} /> 
   	}  
-  	{prof === 'schools' &&
-  	<SchoolProfile stylez={stylez} />
+  	{(prof === 'schools' && school !== undefined) &&
+  	<SchoolProfile stylez={stylez} /> 
   	}  
+  	{(prof === 'students' && !student || prof === 'teachers' && !teacher || prof === 'schools' && !school) &&
+  	<CircularProgress size={50} color='secondary'/>
+  	}
   	</div>
   	)
   }
@@ -54,7 +59,10 @@ const mapStateToProps = state => {
   return { 
   	prof: prof,
   	editing: editing,
-  	currentlyEditing: currentlyEditing
+  	currentlyEditing: currentlyEditing,
+  	student: state.students.currentStudent,
+  	teacher: state.teachers.currentTeacher,
+  	school: state.schools.currentSchool
   }
 }
 
