@@ -4,22 +4,23 @@ import { Link, Redirect } from 'react-router-dom'
 import { currentSearch, flipSubmit } from '../store/search'
 import { currentType } from '../store/create'
 import SearchForm from './SearchForm'
+import { Button, InputLabel, MenuItem, Select } from '@material-ui/core'
 
 class SelectForm extends Component {
 	constructor() {
 	  super()
 	  this.handleChange = this.handleChange.bind(this)
-	  this.handleSubmit = this.handleSubmit.bind(this)
+	  this.handleClick = this.handleClick.bind(this)
 	}
 
 	handleChange(e) {
 	  const { search, create, navigation } = this.props;
+	  console.log(e.target.value)
 	  if(navigation === 'search') {search(e.target.value)}
 	  else if(navigation === 'create') {create(e.target.value)}
 	}
 
-	handleSubmit(e){
-	  e.preventDefault();
+	handleClick(e){
 	  this.props.flipSubmit()
 	}
 
@@ -29,35 +30,35 @@ class SelectForm extends Component {
 
 	render() {
 	  const categories = [ '--', 'students', 'teachers', 'schools' ];
-	  const { handleChange, handleSubmit } = this;
-	  const { search, submitted, navigation } = this.props;
+	  const { handleChange, handleClick } = this;
+	  const { search, submitted, navigation, input } = this.props;
 	  console.log(navigation)
-	  if(submitted && navigation === 'search') {
-	  	return <Redirect from= '/welcome' to='/search'/>
-	  } else if (submitted && navigation === 'create') {
-	  	return <Redirect from='/welcome' to='/create' />
-	  } else {
 	  return (
 	  	<div>
-	  	  <form onChange={handleChange} onSubmit={handleSubmit}>
+	  	  <form >
+	  	  <div>
 	  	  {navigation === 'search' ?
-	  	  <label>Who are you searching for?</label> :
-	  	  <label>Who would you like to create?</label>}
-	  	  <select name='input'>
+	  	  <InputLabel>Who are you searching for?</InputLabel> :
+	  	  <InputLabel>Who would you like to create?</InputLabel>}
+	  	  </div>
+	  	  <Select onChange={handleChange} name='input' value={input}>
 	  	  {categories.map((category, idx) => {
-	  	  	return (<option key={idx} value={category}>{category}</option>)
+	  	  	return (<MenuItem key={idx} value={category}>{category}</MenuItem>)
 	  	  })}
-	  	  </select>
-	  	  <button>Select</button>
+	  	  </Select>
+	  	  {navigation === 'search' &&
+	  	  <Button onClick={handleClick} component={Link} to='/search'>Select</Button>}
+	  	  {navigation === 'create' &&
+	  	  <Button onClick={handleClick} component={Link} to='/create'>Select</Button>}
 	  	  </form>
 	  	</div>
 	  )
-	  }
+
 	}
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { search, submitted } = state.search
+  const { search, submitted, input } = state.search
   const { create } = state.creating
   const { navigation, reset } = ownProps
   return { 
@@ -65,7 +66,8 @@ const mapStateToProps = (state, ownProps) => {
   	submitted: submitted,
   	create: create,
   	navigation: navigation,
-  	reset: reset
+  	reset: reset,
+  	input: input
   }
 }
 

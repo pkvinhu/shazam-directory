@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { flipSubmit, clear } from '../store/search'
-import { Table, TableBody, TableHead, TableRow, TableCell, Paper, Button } from '@material-ui/core'
+import { Table, TableBody, TableHead, TableRow, TableCell, Paper, Button, CircularProgress } from '@material-ui/core'
 
 class SearchInformation extends Component {
   componentWillUnmount(){
@@ -9,14 +9,20 @@ class SearchInformation extends Component {
   }
 
   render() {
-  	const { data } = this.props;
+  	const { data, search, submitted } = this.props;
 
   	const borderStyle = { 
       border: '1px solid black', 
       padding: '25px' 
     }
-
-  	if(data.length > 0) {
+    if (submitted === true) {
+  	  return (
+  	    <div style={{ display:'flex', justifyContent:'center'}}>
+  	      <CircularProgress size={100} color='secondary'/>
+  	    </div>
+  	  )
+    }
+  	else if(data.length > 0) {
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center' }}>
   	    <table style={{ borderCollapse: 'collapse', border: '1px solid black', width: '50%' }}>
@@ -29,7 +35,8 @@ class SearchInformation extends Component {
   	    </table>
   	  </div>
   	)
-  } else {
+  } 
+  else {
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center' }}>
   	    <h3 style={{ backgroundColor: 'yellow' }}>The information you have searched does not exist. Please try again!</h3>
@@ -122,8 +129,12 @@ class SchoolBody extends Component {
 }
 
 const mapStateToProps = state => {
-	const { filteredQuery } = state.search
-	return { data: filteredQuery }
+	const { filteredQuery, search, submitted } = state.search
+	return { 
+		data: filteredQuery,
+		search: search,
+		submitted: submitted
+		}
 }
 
 const mapDispatchToProps = dispatch => ({
