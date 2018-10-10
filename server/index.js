@@ -4,6 +4,7 @@ const db = require('./db')
 const { Student, School, Teacher} = db.models;
 const router = require('./api')
 const path = require('path');
+const port = process.env.PORT || 3000
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -11,7 +12,7 @@ app.use(express.static(path.join(process.cwd(), 'public')));
 app.use('/api/shazam', router)
 
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log('listening')
 })
 
