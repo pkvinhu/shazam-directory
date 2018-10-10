@@ -8,7 +8,8 @@
     "test:client": "mocha ./client/*spec.js --require babel-polyfill --require babel-core/register",
     "test": "npm run test:server & npm run test:client",
     "webpack": "./node_modules/webpack/bin/webpack.js",
-    "start": "npm run webpack -- --watch --mode=development & DATABASE_URL=postgres://localhost:5432/shazam-directory nodemon server/index.js"
+    "start": "npm run webpack -- --watch --mode=development & DATABASE_URL=postgres://localhost:5432/shazam-directory nodemon server/index.js",
+    "postinstall": "npm run webpack"
   },
   "keywords": [],
   "author": "",
