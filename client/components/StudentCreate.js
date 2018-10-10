@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { _fetchStuProfile } from '../store/students'
 import { writeName, 
 	     writeGPA, 
@@ -11,6 +11,7 @@ import { writeName,
 	     reset } from '../store/create'
 import { _fetchSchools } from '../store/schools'
 import { _editStudent, resetEditing } from '../store/profile'
+import { Input, InputLabel, Button, Select, Paper, MenuItem } from '@material-ui/core'
 
 class StudentCreate extends Component {
   
@@ -80,37 +81,43 @@ class StudentCreate extends Component {
     }
     else {
   	return (
+    <Paper style={{ display: 'flex', justifyContent: 'center', width:'70%', padding: '40px' }}>
   	    <form style={{display: 'flex', 
 	  	             justifyContent: 'center', 
 	  	             flexDirection: 'column',
 	  	             width: '50%' }} 
-                   onChange={handleChange} 
-                   onSubmit={handleSubmit}>
-	  	  <label>Name</label>
-	  	  <input type='text'
+                   onChange={handleChange}>
+	  	  <InputLabel>Name</InputLabel>
+	  	  <Input type='text'
 	  	  		 name='name'
-	  	         value={name}></input>
-  	      <label>GPA</label>
-  	      <input type='text'
+	  	         value={name}></Input>
+  	      <InputLabel>GPA</InputLabel>
+  	      <Input type='text'
   	             name='gpa'
-  	    	     value={gpa}></input>
-  	      <label>Extracurricular</label>
-  	      <input type='text'
+  	    	     value={gpa}></Input>
+  	      <InputLabel>Extracurricular</InputLabel>
+  	      <Input type='text'
   	             name='extracurricular'
   	             value={extracurricular}
-  	             style={{ height: '40px', padding: '5px'}}></input>
-          <label>School</label>
-          <select name='schools'>
+  	             style={{ height: '40px', padding: '5px'}}></Input>
+          <InputLabel>School</InputLabel>
+          <Select name='schools'
+                  onChange={handleChange}
+                  value={enrollment}>
           {schools.map(school => {
             return (
-              <option value={school.id}>{school.name}</option>
+              <MenuItem value={school.id}>{school.name}</MenuItem>
               )
           })}
-          </select>
+          </Select>
   	      <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-  	      <button style={{ width: '15%' }}>Submit</button>
+  	      <Button component={Link} 
+                  to={`/students/${student.id}`} 
+                  onClick={handleSubmit} 
+                  style={{ width: '15%' }}>Submit</Button>
   	      </div>
 	  	</form>
+      </Paper>
   	)
   }
   }

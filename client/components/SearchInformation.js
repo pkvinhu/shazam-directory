@@ -1,11 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { flipSubmit, clear } from '../store/search'
+import { flipSubmit, clearQuery } from '../store/search'
 import { Table, TableBody, TableHead, TableRow, TableCell, Paper, Button, CircularProgress } from '@material-ui/core'
 
 class SearchInformation extends Component {
+  constructor(){
+  	super()
+  	this.state={
+  	  loading: true
+  	}
+  	this.loading = this.loading.bind(this);
+  }
+
+  componentWillMount(){
+  	this.loader = setInterval(
+      () => this.loading(),
+      3000
+    );
+  }
+
   componentWillUnmount(){
+  	clearInterval(this.loader);
   	this.props.clear();
+  }
+
+  loading(){
+  	this.setState({ loading: false})
   }
 
   render() {
@@ -15,7 +35,7 @@ class SearchInformation extends Component {
       border: '1px solid black', 
       padding: '25px' 
     }
-    if (submitted === true) {
+    if (submitted === true || this.state.loading) {
   	  return (
   	    <div style={{ display:'flex', justifyContent:'center'}}>
   	      <CircularProgress size={100} color='secondary'/>
@@ -139,7 +159,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   flipSubmit: () => dispatch(flipSubmit()),
-  clear: () => dispatch(clear())
+  clear: () => dispatch(clearQuery())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchInformation)

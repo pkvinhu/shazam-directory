@@ -31,7 +31,7 @@ class SelectForm extends Component {
 	render() {
 	  const categories = [ '--', 'students', 'teachers', 'schools' ];
 	  const { handleChange, handleClick } = this;
-	  const { search, submitted, navigation, input } = this.props;
+	  const { searchVal, submitted, navigation, input } = this.props;
 	  console.log(navigation)
 	  return (
 	  	<div>
@@ -41,7 +41,7 @@ class SelectForm extends Component {
 	  	  <InputLabel>Who are you searching for?</InputLabel> :
 	  	  <InputLabel>Who would you like to create?</InputLabel>}
 	  	  </div>
-	  	  <Select onChange={handleChange} name='input' value={input}>
+	  	  <Select onChange={handleChange} name='input' value={searchVal}>
 	  	  {categories.map((category, idx) => {
 	  	  	return (<MenuItem key={idx} value={category}>{category}</MenuItem>)
 	  	  })}
@@ -62,7 +62,7 @@ const mapStateToProps = (state, ownProps) => {
   const { create } = state.creating
   const { navigation, reset } = ownProps
   return { 
-  	search: search,
+  	searchVal: search,
   	submitted: submitted,
   	create: create,
   	navigation: navigation,

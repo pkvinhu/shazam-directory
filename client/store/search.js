@@ -36,7 +36,7 @@ export const flipSubmit = () => ({
   type: FLIP_SUBMIT
 })
 
-export const clear = () => ({
+export const clearQuery = () => ({
   type: QUERY_DATA
 })
 
@@ -44,6 +44,7 @@ export const clear = () => ({
 export const _searchData = (search, input) => async dispatch => {
   const response = await axios.post(`/api/shazam/search/${search}`, input)
   const info = response.data;
+  console.log(info)
   const action = query(info)
   dispatch(action)
 }
@@ -79,7 +80,12 @@ const search = (state = initialState, action) => {
       }
 
     case CLEAR_QUERY:
-      return initialState
+      return {
+      	search: '',
+		input: '',
+		filteredQuery: [],
+		submitted: false
+      }
 
   	default:
   	  return state;

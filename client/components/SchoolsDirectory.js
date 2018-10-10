@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { _fetchSchools, _fetchSchProfile } from '../store/schools'
 import { profileType } from '../store/profile'
-import { clear } from '../store/search'
+import { clearQuery } from '../store/search'
 import { reset } from '../store/create'
 import { Link, Redirect } from 'react-router-dom'
 import { Table, TableBody, TableHead, TableRow, TableCell, Paper, Button } from '@material-ui/core'
@@ -20,9 +20,9 @@ class SchoolsDirectory extends Component {
   }
 
   componentDidMount() {
-    const { _fetchSchools, clear, reset } = this.props;
+    const { _fetchSchools, clearQuery, reset } = this.props;
     _fetchSchools()
-    clear()
+    clearQuery()
     /*
     reset()*/
   }
@@ -85,7 +85,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   _fetchSchools: () => dispatch(_fetchSchools()),
-  clear: () => dispatch(clear()),
+  clearQuery: () => dispatch(clearQuery()),
   reset: () => dispatch(reset()),
   _fetchSchProfile: (id) => dispatch(_fetchSchProfile(id)),
   profileType: (prof) => dispatch(profileType(prof))

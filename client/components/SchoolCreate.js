@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { _fetchSchProfile } from '../store/schools'
 import { writeName,
 		     writeAddress, 
@@ -9,6 +9,7 @@ import { writeName,
 	       _createSchool,
 	       reset } from '../store/create'
 import { _editSchool, resetEditing } from '../store/profile'
+import { Input, InputLabel, Button, Paper } from '@material-ui/core'
 
 class SchoolCreate extends Component {
 
@@ -69,29 +70,33 @@ constructor(){
     }
     else if(editing || create) {
   	return (
+      <Paper style={{ display: 'flex', justifyContent: 'center', width:'70%', padding: '40px' }}>
   	    <form style={{display: 'flex', 
 	  	             justifyContent: 'center', 
 	  	             flexDirection: 'column',
 	  	             width: '50%' }} 
-                   onChange={handleChange} 
-                   onSubmit={handleSubmit}>
-	  	  <label>Name</label>
-	  	  <input type='text'
+                   onChange={handleChange}>
+	  	  <InputLabel>Name</InputLabel>
+	  	  <Input type='text'
 	  	  		 name='name'
-	  	         value={name}></input>
-  	      <label>Address</label>
-  	      <input type='text'
+	  	         value={name}></Input>
+  	      <InputLabel>Address</InputLabel>
+  	      <Input type='text'
   	             name='address'
-  	    	     value={address}></input>
-  	      <label>Description</label>
-  	      <input type='text'
+  	    	     value={address}></Input>
+  	      <InputLabel>Description</InputLabel>
+  	      <Input type='text'
   	             name='description'
   	             value={description}
-  	             style={{ height: '40px', padding: '5px'}}></input>
+  	             style={{ height: '40px', padding: '5px'}}></Input>
   	      <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-  	      <button style={{ width: '15%' }}>Submit</button>
+  	      <Button onClick={handleSubmit}
+                  component={Link}
+                  to={`/schools/${school.id}`}
+                  style={{ width: '15%' }}>Submit</Button>
   	      </div>
 	  	</form>
+      </Paper>
   	)
   }
   }

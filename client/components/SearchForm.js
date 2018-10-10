@@ -40,7 +40,7 @@ class SearchForm extends Component {
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center'}}>
 
-  	    <form onSubmit={handleSubmit}>
+  	    <form >
 
   	      <Input placeholder={`Search ${search}...`} 
   	             name={input}
