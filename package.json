@@ -9,7 +9,7 @@
     "test": "npm run test:server & npm run test:client",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "start:dev": "npm run webpack -- --watch --mode=development & DATABASE_URL=postgres://localhost:5432/shazam-directory nodemon server/index.js",
-    "start": "node server/index.js",
+    "start": "node ./server/index.js",
     "postinstall": "npm run webpack"
   },
   "keywords": [],
