@@ -65,7 +65,7 @@ const Teacher = conn.define('teacher', {
     type: Sequelize.STRING,
     allowNull: false,
     get(){
-      const name = this.getDataValue('gender');
+      const name = this.getDataValue('name');
       return this.getDataValue('gender') === 'M' ?
       'Mr. ' + this.getDataValue('name').split(' ')[name.length-1] :
       'Ms. ' + this.getDataValue('name').split(' ')[name.length-1]
