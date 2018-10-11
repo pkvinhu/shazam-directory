@@ -12,7 +12,10 @@ router.get('/students', (req, res, next) => {
   	},
     {
       model: School
-    }]
+    }],
+    order:[
+      ['name', 'DESC']
+    ]
   })
   .then(students => {
     res.send(students)
@@ -28,7 +31,10 @@ router.get('/teachers', (req, res, next) => {
   	},
     {
       model: School
-    }]
+    }],
+    order:[
+      ['name', 'DESC']
+    ]
   })
   .then(teachers => res.send(teachers))
   .catch(next)
@@ -42,7 +48,10 @@ router.get('/schools', (req, res, next) => {
   	  }, {
   	  	model: Teacher,
   	  	as: 'Faculty'
-  	  }]
+  	  }],
+    order:[
+      ['name', 'DESC']
+    ]
   })
   .then(schools => res.send(schools))
   .catch(next)
