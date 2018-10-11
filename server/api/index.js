@@ -14,7 +14,7 @@ router.get('/students', (req, res, next) => {
       model: School
     }],
     order:[
-      ['name', 'DESC']
+      ['name', 'ASC']
     ]
   })
   .then(students => {
@@ -33,7 +33,7 @@ router.get('/teachers', (req, res, next) => {
       model: School
     }],
     order:[
-      ['name', 'DESC']
+      ['name', 'ASC']
     ]
   })
   .then(teachers => res.send(teachers))
@@ -50,7 +50,7 @@ router.get('/schools', (req, res, next) => {
   	  	as: 'Faculty'
   	  }],
     order:[
-      ['name', 'DESC']
+      ['name', 'ASC']
     ]
   })
   .then(schools => res.send(schools))
