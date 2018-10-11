@@ -15,7 +15,6 @@ class SelectForm extends Component {
 
 	handleChange(e) {
 	  const { search, create, navigation } = this.props;
-	  console.log(e.target.value)
 	  if(navigation === 'search') {search(e.target.value)}
 	  else if(navigation === 'create') {create(e.target.value)}
 	}

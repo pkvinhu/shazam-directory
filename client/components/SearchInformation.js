@@ -35,7 +35,7 @@ class SearchInformation extends Component {
       border: '1px solid black', 
       padding: '25px' 
     }
-    if (submitted === true || this.state.loading) {
+    if (this.state.loading) {
   	  return (
   	    <div style={{ display:'flex', justifyContent:'center'}}>
   	      <CircularProgress size={100} color='secondary'/>
