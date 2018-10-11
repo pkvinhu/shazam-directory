@@ -4,13 +4,13 @@ import { Redirect } from 'react-router-dom'
 import StudentCreate from './StudentCreate'
 import TeacherCreate from './TeacherCreate'
 import SchoolCreate from './SchoolCreate'
-import {  } from '../store/create'
+import { Typography } from '@material-ui/core'
 
 class CreateForm extends Component {
+	
 
 	render() {
 	  const { create, submitted } = this.props;
-	  console.log(submitted)
 	  if(submitted && create === 'students') {
 	  	return <Redirect to='/students' />
 	  } 
@@ -25,7 +25,7 @@ class CreateForm extends Component {
 	  	<div style={{display: 'flex', 
 	  	             justifyContent: 'center', 
 	  	             flexDirection: 'column' }}>
-	  	  <h2>Basic Information</h2>
+	  	  <Typography variant='display1' color='inherit'>Basic Information</Typography>
 	  	  {create === 'students' &&
 	  	  <StudentCreate />}
 	  	  {create === 'teachers' &&
