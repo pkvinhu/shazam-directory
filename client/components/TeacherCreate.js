@@ -23,7 +23,10 @@ constructor(){
   handleChange(e){
   	const { writeName, writeGender, writeSubjects, writeEmployment } = this.props;
   	if (e.target.name === 'name') {writeName(e.target.value)}
-  	else if (e.target.name === 'gender') {writeGender(e.target.value)}
+  	else if (e.target.name === 'gender') {
+      console.log(e.target)
+      writeGender(e.target.value)
+    }
   	else if (e.target.name === 'subjects') {writeSubjects(e.target.value)}
     else if (e.target.name === 'schools') {writeEmployment(e.target.value)}
   }
@@ -86,9 +89,9 @@ constructor(){
   	      <Select name='gender'
                   onChange={handleChange}
                   value={gender}>
-  	           <MenuItem value={gender}>--</MenuItem>
-  	    	     <MenuItem value={gender}>M</MenuItem>
-  	    	     <MenuItem value={gender}>F</MenuItem>
+  	           <MenuItem value=''>--</MenuItem>
+  	    	     <MenuItem value='M'>M</MenuItem>
+  	    	     <MenuItem value='F'>F</MenuItem>
   	    	     </Select>
   	      <InputLabel>Subjects</InputLabel>
   	      <Input type='text'
