@@ -12,10 +12,11 @@ class SearchForm extends Component {
   	super()
   	this.handleChange = this.handleChange.bind(this);
   	/*this.handleSubmit = this.handleSubmit.bind(this);*/
-  	this.handleClick = this.handleClick.bind(this);
+  	this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(e){
+  	e.preventDefault();
   	const { writeSearch } = this.props;
   	writeSearch(e.target.value);
   }
@@ -27,7 +28,8 @@ class SearchForm extends Component {
 	.then(()=>flipSubmit())
   }*/
 
-  handleClick(e) {
+  handleSubmit(e) {
+  	
   	const { search, input, _searchData, flipSubmit } = this.props;
     _searchData(search, {name: input})
 	.then(()=>flipSubmit())
@@ -35,19 +37,19 @@ class SearchForm extends Component {
   
   render() {
     const { input, search, submitted } = this.props
-    const { handleChange, handleSubmit, handleClick } = this;
+    const { handleChange, handleSubmit } = this;
   	
   	return (
   	  <div style={{ display: 'flex', justifyContent: 'center'}}>
 
-  	    <form >
+  	    <form onSubmit={handleSubmit}>
 
   	      <Input placeholder={`Search ${search}...`} 
   	             name={input}
   	             type='text' 
   	             onChange={handleChange} 
   	             value={input}></Input>
-  	      <Button onClick={handleClick} component={Link} to={`/search/${search}`}>
+  	      <Button onClick={handleSubmit} component={Link} to={`/search/${search}`}>
 	  	      <Icon>
 	  	      search_icon
 	  	      </Icon>

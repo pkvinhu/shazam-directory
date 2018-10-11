@@ -65,9 +65,10 @@ const Teacher = conn.define('teacher', {
     type: Sequelize.STRING,
     allowNull: false,
     get(){
+      const name = this.getDataValue('gender');
       return this.getDataValue('gender') === 'M' ?
-      'Mr. ' + this.getDataValue('name').split(' ')[1] :
-      'Ms. ' + this.getDataValue('name').split(' ')[1]
+      'Mr. ' + this.getDataValue('name').split(' ')[name.length-1] :
+      'Ms. ' + this.getDataValue('name').split(' ')[name.length-1]
     }
   },
   gender: {
@@ -85,7 +86,6 @@ const Teacher = conn.define('teacher', {
         return this.getDataValue('subjects').join(', ')
       }
     }
-    // defaultValue: faker.random.words()
   },
   admin: {
   	type: Sequelize.BOOLEAN,

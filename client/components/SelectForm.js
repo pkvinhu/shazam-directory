@@ -10,7 +10,7 @@ class SelectForm extends Component {
 	constructor() {
 	  super()
 	  this.handleChange = this.handleChange.bind(this)
-	  this.handleClick = this.handleClick.bind(this)
+	  this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	handleChange(e) {
@@ -19,7 +19,7 @@ class SelectForm extends Component {
 	  else if(navigation === 'create') {create(e.target.value)}
 	}
 
-	handleClick(e){
+	handleSubmit(e){
 	  this.props.flipSubmit()
 	}
 
@@ -29,7 +29,7 @@ class SelectForm extends Component {
 
 	render() {
 	  const categories = [ '--', 'students', 'teachers', 'schools' ];
-	  const { handleChange, handleClick } = this;
+	  const { handleChange, handleSubmit } = this;
 	  const { searchVal, submitted, navigation, input } = this.props;
 	  console.log(navigation)
 	  return (
@@ -40,15 +40,17 @@ class SelectForm extends Component {
 	  	  <InputLabel>Who are you searching for?</InputLabel> :
 	  	  <InputLabel>Who would you like to create?</InputLabel>}
 	  	  </div>
-	  	  <Select onChange={handleChange} name='input' value={searchVal}>
+	  	  <Select onChange={handleChange} 
+	  	  		  name='input' 
+	  	  		  value={searchVal}>
 	  	  {categories.map((category, idx) => {
 	  	  	return (<MenuItem key={idx} value={category}>{category}</MenuItem>)
 	  	  })}
 	  	  </Select>
 	  	  {navigation === 'search' &&
-	  	  <Button onClick={handleClick} component={Link} to='/search'>Select</Button>}
+	  	  <Button onClick={handleSubmit} component={Link} to='/search'>Select</Button>}
 	  	  {navigation === 'create' &&
-	  	  <Button onClick={handleClick} component={Link} to='/create'>Select</Button>}
+	  	  <Button onClick={handleSubmit} component={Link} to='/create'>Select</Button>}
 	  	  </form>
 	  	</div>
 	  )
